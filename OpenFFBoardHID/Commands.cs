@@ -425,7 +425,7 @@ namespace OpenFFBoard
             }
 
             /// <summary>
-            /// Reset errors
+            /// Clear errors
             /// </summary>
             /// <returns></returns>
             public bool ClearErrors()
