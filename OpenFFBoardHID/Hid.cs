@@ -66,7 +66,12 @@ namespace OpenFFBoard
             BitConverter.GetBytes(data).CopyTo(buffer, 9); //data 1
             BitConverter.GetBytes(addr).CopyTo(buffer, 17); //data 2 (addr)
 
-            TransferResult readBuffer = await device.WriteAndReadAsync(buffer).ConfigureAwait(false);
+            await device.WriteAsync(buffer).ConfigureAwait(false);
+            TransferResult readBuffer;
+            do
+            {
+                readBuffer = await device.ReadAsync().ConfigureAwait(false);
+            } while (readBuffer.Data[0] != 0xA1);
 
             return new Commands.BoardResponse
             {
