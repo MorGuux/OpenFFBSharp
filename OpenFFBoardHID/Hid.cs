@@ -26,19 +26,18 @@ namespace OpenFFBoard
         /// Fetch currently connected OpenFFBoards
         /// </summary>
         /// <returns></returns>
-        public static async Task<List<IHidDevice>> GetBoardsAsync()
+        public static async Task<IHidDevice[]> GetBoardsAsync()
         {
             var hidFactory =
                 new FilterDeviceDefinition(0x1209, 0xFFB0, label: "OpenFFBoard")
                     .CreateWindowsHidDeviceFactory();
 
             var deviceDefinitions =
-                (await hidFactory.GetConnectedDeviceDefinitionsAsync().ConfigureAwait(false)).ToList();
-            List<IHidDevice> devices = new List<IHidDevice>();
-            foreach (var device in deviceDefinitions)
-            {
-                devices.Add((IHidDevice) await hidFactory.GetDeviceAsync(device).ConfigureAwait(false));
-            }
+                (await hidFactory.GetConnectedDeviceDefinitionsAsync().ConfigureAwait(false)).ToArray();
+            IHidDevice[] devices = new IHidDevice[deviceDefinitions.Length];
+
+            for (int i = 0; i < deviceDefinitions.Length; i++)
+                devices[i] = ((IHidDevice) await hidFactory.GetDeviceAsync(deviceDefinitions[i]).ConfigureAwait(false));
 
             return devices;
         }

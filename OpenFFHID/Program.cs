@@ -14,7 +14,7 @@ namespace OpenFFHID
             //Get list of OpenFFBoards
             var boards = await OpenFFBoard.Hid.GetBoardsAsync();
 
-            var offbDevice = boards.FirstOrDefault();
+            var offbDevice = boards[0];
 
             OpenFFBoard.Board openFFBoard = new OpenFFBoard.Hid(offbDevice);
 
