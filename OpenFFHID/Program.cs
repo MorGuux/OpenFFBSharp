@@ -11,6 +11,7 @@ namespace OpenFFHID
 
         static async Task Main(string[] args)
         {
+            /*
             //Get list of OpenFFBoards
             var boards = await OpenFFBoard.Hid.GetBoardsAsync();
 
@@ -33,6 +34,14 @@ namespace OpenFFHID
             Console.WriteLine("Main class: {0}", openFFBoard.System.GetActiveMainClass());
 
             openFFBoard.Disconnect();
+
+            Console.ReadKey();
+            */
+
+            var boards = OpenFFBoard.Serial.GetBoards();
+            OpenFFBoard.Board openFFBoard = new Serial(boards[1], 500000);
+            openFFBoard.Connect();
+            Console.WriteLine("Help: {0}", openFFBoard.Axis.GetHelp());
 
             Console.ReadKey();
         }

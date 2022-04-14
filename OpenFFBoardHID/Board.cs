@@ -18,7 +18,8 @@ namespace OpenFFBoard
         public Commands.System System { get; }
         public abstract void Connect();
         public abstract void Disconnect();
-        public abstract Commands.BoardResponse GetBoardData(ushort classId, byte instance, uint cmd);
-        public abstract Commands.BoardResponse SetBoardData(ushort classId, byte instance, uint cmd, ulong data, ulong address = 0);
+        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd);
+        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd);
+        public abstract Commands.BoardResponse SetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong data, ulong address = 0);
     }
 }
