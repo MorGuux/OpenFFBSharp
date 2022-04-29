@@ -5,11 +5,24 @@ Get a list of connected OpenFFBoards
 ```C#
 var boards = await OpenFFBoard.Hid.GetBoardsAsync();
 ```
-then you can declare a new OpenFFBoard object from the first connected board (in this case using HID communications)
+then you can declare a new OpenFFBoard object from the first connected board
 ```C#
 OpenFFBoard.Board openFFBoard = new OpenFFBoard.Hid(boards[0]);
 ```
-then you can connect to the board
+
+### Serial
+Get a list of connected OpenFFBoards
+```C#
+var boards = OpenFFBoard.Serial.GetBoards();
+```
+then you can declare a new OpenFFBoard object from the first connected board
+```C#
+OpenFFBoard.Board openFFBoard = new OpenFFBoard.Hid(boards[0]);
+```
+
+## Initialisation
+
+Once you have declared a board, you can connect to it
 ```C#
 openFFBoard.Connect();
 ```
