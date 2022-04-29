@@ -60,6 +60,11 @@ namespace OpenFFBoard
             return SendCmd(Commands.CmdType.Request, boardClass, null, cmd);
         }
 
+        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0)
+        {
+            return SendCmd(Commands.CmdType.Write, boardClass, null, cmd);
+        }
+
         public Commands.BoardResponse SendCmd(Commands.CmdType type, BoardClass classId, byte? instance, BoardCommand cmd, ulong data = 0, ulong addr = 0)
         {
             string cmdBuffer = classId.Prefix + ".";
@@ -121,11 +126,6 @@ namespace OpenFFBoard
             }
             return null;
 
-        }
-
-        public override Commands.BoardResponse SetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong data, ulong address = 0)
-        {
-            throw new NotImplementedException();
         }
     }
 }

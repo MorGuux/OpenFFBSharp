@@ -78,7 +78,7 @@ namespace OpenFFBoard
                 Type = (Commands.CmdType) readBuffer.Data[1],
                 ClassId = BitConverter.ToUInt16(readBuffer.Data, 2),
                 Instance = readBuffer.Data[4],
-                Cmd = boardClass.GetCommandFromId(BitConverter.ToUInt32(readBuffer.Data, 5)),
+                Cmd = cmd,
                 Data = BitConverter.ToInt64(readBuffer.Data, 9),
                 Address = BitConverter.ToUInt64(readBuffer.Data, 17)
             };
@@ -116,10 +116,9 @@ namespace OpenFFBoard
             return SendCmdAsync(_board, Commands.CmdType.Request, boardClass, null, cmd).Result;
         }
 
-        public override Commands.BoardResponse SetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong data,
-            ulong address = 0)
+        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0)
         {
-            return SendCmdAsync(_board, Commands.CmdType.Write, boardClass, instance, cmd, data, address).Result;
+            return SendCmdAsync(_board, Commands.CmdType.Write, boardClass, instance, cmd, Convert.ToUInt64(value), address).Result;
         }
     }
 }

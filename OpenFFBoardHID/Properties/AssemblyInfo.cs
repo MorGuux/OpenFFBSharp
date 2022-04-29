@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenFFBoardHID")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("OpenFFBSharp")]
+[assembly: AssemblyDescription("C# interface to the OpenFFBoard")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OpenFFBoardHID")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCompany("Morgan Gardner")]
+[assembly: AssemblyProduct("OpenFFBSharp")]
+[assembly: AssemblyCopyright("Copyright © 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
