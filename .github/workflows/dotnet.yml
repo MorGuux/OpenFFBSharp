@@ -20,6 +20,9 @@ jobs:
       
     - name: List files
       run: ls
+      
+    - name: Print current directory
+      run: pwd
      
     - name: Restore NuGet Packages
       run: nuget restore OpenFFBSharp.sln
