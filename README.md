@@ -2,10 +2,10 @@
 
 There are two methods of communication to an OpenFFBoard, HID and Serial. Each method has its own benefits and drawbacks, which you may wish to consider. Changing between the two communication methods requires very little code changes.
 
-| Communication | Benefits | Drawbacks |
-| ------------- | -------- | --------- |
-| HID | Multiple simultaneous connections | Does not support some commands (help, class lists etc.) |
-| Serial | Supports all commands and data types | Single connection to one client |
+| Communication | Benefits | Drawbacks | General use case |
+| ------------- | -------- | --------- | ---------------- |
+| HID | Multiple simultaneous connections | Does not support some commands (help, class lists etc.) | Changing simple board parameters (power, rotation degrees etc.) |
+| Serial | Supports all commands and data types | Single connection to one client | More advanced board settings |
 
 ### HID
 Get a list of connected OpenFFBoards
