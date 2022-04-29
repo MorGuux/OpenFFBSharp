@@ -62,9 +62,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenFFBSharp\OpenFFSharp.csproj">
+    <ProjectReference Include="..\OpenFFBSharp\OpenFFBSharp.csproj">
       <Project>{39fc2da2-6e0b-437c-a98b-ff092d2759d4}</Project>
-      <Name>OpenFFSharp</Name>
+      <Name>OpenFFBSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
