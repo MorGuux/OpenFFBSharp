@@ -7,7 +7,7 @@ namespace OpenFFBClient
     class Program
     {
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             //--SERIAL--//
             var boards = OpenFFBoard.Serial.GetBoards();
