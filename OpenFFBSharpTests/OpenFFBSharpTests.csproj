@@ -62,7 +62,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenFFBoardHID\OpenFFSharp.csproj">
+    <ProjectReference Include="..\OpenFFBSharp\OpenFFSharp.csproj">
       <Project>{39fc2da2-6e0b-437c-a98b-ff092d2759d4}</Project>
       <Name>OpenFFSharp</Name>
     </ProjectReference>
