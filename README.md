@@ -38,5 +38,11 @@ Once you have declared a board, you can connect to it
 openFFBoard.Connect();
 ```
 
+## Accessing Board Properties
+
 Once this initialisation process has been followed, you can now access the board properties.
+
+```C#
+Console.WriteLine("Power: {0}", openFFBoard.Axis.GetPower());
+```
 
