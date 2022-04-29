@@ -1,0 +1,22 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.6
+     
+    - name: Restore NuGet Packages
+      run: nuget restore OpenFFBSharp.sln
+      
+    - name: Build
+      run: msbuild OpenFFBSharp.sln
