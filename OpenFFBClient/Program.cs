@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using OpenFFBoard;
 
-namespace OpenFFHID
+namespace OpenFFBClient
 {
     class Program
     {
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            //Get list of OpenFFBoards
-            var boards = await OpenFFBoard.Hid.GetBoardsAsync();
+            //--SERIAL--//
+            var boards = OpenFFBoard.Serial.GetBoards();
+            Board openFFBoard = new Serial(Serial.GetBoards()[1], 500000);
 
-            var offbDevice = boards[0];
+            //--HID--//
+            //var boards = OpenFFBoard.Hid.GetBoardsAsync().Result;
+            //Board openFFBoard = new OpenFFBoard.Hid(boards[0]);
 
-            OpenFFBoard.Board openFFBoard = new OpenFFBoard.Hid(offbDevice);
-
-            //Initialize the device
             openFFBoard.Connect();
 
             Console.WriteLine("Power: {0}", openFFBoard.Axis.GetPower());
@@ -29,12 +27,11 @@ namespace OpenFFHID
             Console.WriteLine("Endstop Gain: {0}", openFFBoard.Axis.GetEndstopGain());
             Console.WriteLine("Effects Ratio: {0}", openFFBoard.Axis.GetEffectsRatio());
             Console.WriteLine("Axis Position: {0}", openFFBoard.Axis.GetAxisPosition());
-            Console.WriteLine("Zeroed Encoder: {0}", openFFBoard.Axis.ZeroEncoder().ToString());
-            Console.WriteLine("Main class: {0}", openFFBoard.System.GetActiveMainClass());
 
-            openFFBoard.Disconnect();
+            Console.WriteLine("Device ID: {0}", openFFBoard.System.GetDeviceId());
 
             Console.ReadKey();
+            
         }
 
     }

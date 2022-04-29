@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Device.Net;
@@ -47,22 +46,22 @@ namespace OpenFFBoard
         /// </summary>
         /// <param name="device">Device to send data to</param>
         /// <param name="type">Command type (error, read, write)</param>
-        /// <param name="classId">ID of the targeted class. Used for directing commands at a specific class.</param>
+        /// <param name="boardClass">Target class. Used for directing commands at a specific class.</param>
         /// <param name="instance">Instance of the targeted class. Used for directing commands at a specific driver/axis.</param>
         /// <param name="cmd">Command to send (board parameters)</param>
         /// <param name="data">Data to send</param>
         /// <param name="addr">Second data to send (optional)</param>
         /// <returns></returns>
         public static async Task<Commands.BoardResponse> SendCmdAsync(IHidDevice device, Commands.CmdType type,
-            ushort classId,
-            byte instance, uint cmd, ulong data = 0, ulong addr = 0)
+            BoardClass boardClass,
+            byte? instance, BoardCommand cmd, ulong data = 0, ulong addr = 0)
         {
             var buffer = new byte[25];
             buffer[0] = 0xA1;
             buffer[1] = (byte) type; //type
-            BitConverter.GetBytes(classId).CopyTo(buffer, 2); //classID
-            buffer[4] = instance; //instance
-            BitConverter.GetBytes(cmd).CopyTo(buffer, 5); //cmd
+            BitConverter.GetBytes(boardClass.ClassId).CopyTo(buffer, 2); //classID
+            buffer[4] = instance ?? 0; //instance
+            BitConverter.GetBytes(cmd.Id).CopyTo(buffer, 5); //cmd
             BitConverter.GetBytes(data).CopyTo(buffer, 9); //data 1
             BitConverter.GetBytes(addr).CopyTo(buffer, 17); //data 2 (addr)
 
@@ -78,7 +77,7 @@ namespace OpenFFBoard
                 Type = (Commands.CmdType) readBuffer.Data[1],
                 ClassId = BitConverter.ToUInt16(readBuffer.Data, 2),
                 Instance = readBuffer.Data[4],
-                Cmd = BitConverter.ToUInt32(readBuffer.Data, 5),
+                Cmd = cmd,
                 Data = BitConverter.ToInt64(readBuffer.Data, 9),
                 Address = BitConverter.ToUInt64(readBuffer.Data, 17)
             };
@@ -87,7 +86,10 @@ namespace OpenFFBoard
         public override void Connect()
         {
             if (_board != null)
+            {
                 _board.InitializeAsync().ConfigureAwait(false);
+                IsConnected = _board.IsInitialized;
+            }
             else
             {
                 throw new NullReferenceException(
@@ -106,15 +108,19 @@ namespace OpenFFBoard
             }
         }
 
-        public override Commands.BoardResponse GetBoardData(ushort classId, byte instance, uint cmd)
+        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd)
         {
-            return SendCmdAsync(_board, Commands.CmdType.Request, classId, instance, cmd).Result;
+            return SendCmdAsync(_board, Commands.CmdType.Request, boardClass, instance, cmd).Result;
         }
 
-        public override Commands.BoardResponse SetBoardData(ushort classId, byte instance, uint cmd, ulong data,
-            ulong address = 0)
+        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd)
         {
-            return SendCmdAsync(_board, Commands.CmdType.Write, classId, instance, cmd, data, address).Result;
+            return SendCmdAsync(_board, Commands.CmdType.Request, boardClass, null, cmd).Result;
+        }
+
+        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0)
+        {
+            return SendCmdAsync(_board, Commands.CmdType.Write, boardClass, instance, cmd, Convert.ToUInt64(value), address).Result;
         }
     }
 }

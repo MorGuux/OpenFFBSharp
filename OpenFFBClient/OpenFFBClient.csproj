@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7BAA5BDF-A1A8-47D6-8E49-891FD475C66D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>OpenFFHID</RootNamespace>
-    <AssemblyName>OpenFFHID</AssemblyName>
+    <RootNamespace>OpenFFBClient</RootNamespace>
+    <AssemblyName>OpenFFBClient</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -40,8 +40,8 @@
     <Reference Include="Hid.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hid.Net.4.3.0-beta\lib\net45\Hid.Net.dll</HintPath>
     </Reference>
-    <Reference Include="OpenFFBoard.HID">
-      <HintPath>..\OpenFFBoardHID\bin\Debug\OpenFFBoard.HID.dll</HintPath>
+    <Reference Include="OpenFFBSharp">
+      <HintPath>..\OpenFFBoardHID\bin\Debug\OpenFFBSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
