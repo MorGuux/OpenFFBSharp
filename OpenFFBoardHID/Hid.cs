@@ -87,7 +87,10 @@ namespace OpenFFBoard
         public override void Connect()
         {
             if (_board != null)
+            {
                 _board.InitializeAsync().ConfigureAwait(false);
+                IsConnected = _board.IsInitialized;
+            }
             else
             {
                 throw new NullReferenceException(

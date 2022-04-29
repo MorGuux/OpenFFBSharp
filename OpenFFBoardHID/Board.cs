@@ -8,6 +8,7 @@ namespace OpenFFBoard
 {
     public abstract class Board
     {
+        public bool IsConnected { get; internal set; }
         protected Board()
         {
             Axis = new Commands.FFBAxis(this);

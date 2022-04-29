@@ -13,35 +13,37 @@ namespace OpenFFBoard
     public class Serial : Board
     {
 
-        private readonly SerialPort _serialPort;
+        private readonly SerialPort serialPort;
 
         public Serial(string comPort, int baudRate)
         {
-            _serialPort = new SerialPort(comPort, baudRate);
+            serialPort = new SerialPort(comPort, baudRate);
         }
 
         public override void Connect()
         {
-            _serialPort.Handshake = Handshake.None;
-            _serialPort.Parity = Parity.None;
-            _serialPort.DataBits = 8;
-            _serialPort.StopBits = StopBits.One;
-            _serialPort.DtrEnable = true;
-            _serialPort.ReadTimeout = 200;
-            _serialPort.WriteTimeout = 50;
+            serialPort.Handshake = Handshake.None;
+            serialPort.Parity = Parity.None;
+            serialPort.DataBits = 8;
+            serialPort.StopBits = StopBits.One;
+            serialPort.DtrEnable = true;
+            serialPort.ReadTimeout = 200;
+            serialPort.WriteTimeout = 50;
             try
             {
-                _serialPort.Open();
+                serialPort.Open();
+                IsConnected = serialPort.IsOpen;
             }
             catch
             {
-                throw new IOException("Could not connect to the OpenFFBoard on " + _serialPort.PortName);
+                IsConnected = false;
+                throw new IOException("Could not connect to the OpenFFBoard on " + serialPort.PortName);
             }
         }
 
         public override void Disconnect()
         {
-            _serialPort.Close();
+            serialPort.Close();
         }
 
         public static string[] GetBoards()
@@ -85,10 +87,10 @@ namespace OpenFFBoard
                     break;
             }
 
-            _serialPort.WriteLine(cmdBuffer);
+            serialPort.WriteLine(cmdBuffer);
             string response = "";
             do
-                response += _serialPort.ReadExisting();
+                response += serialPort.ReadExisting();
             while (!response.Contains("]"));
             response = response.Trim();
 
