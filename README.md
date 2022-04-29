@@ -1,4 +1,4 @@
-# OpenFFBSharp - C# client to interact with an OpenFFBoard
+# OpenFFBSharp - C# client for the OpenFFBoard
 
 #### Designed to be used with an OpenFFBoard. More info at https://github.com/Ultrawipf/OpenFFBoard
 
