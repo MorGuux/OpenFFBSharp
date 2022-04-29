@@ -2,6 +2,8 @@
 
 #### Designed to be used with an OpenFFBoard. More info at https://github.com/Ultrawipf/OpenFFBoard
 
+## WIP - This project is not fully functional yet, so some commands and board classes may be missing
+
 There are two methods of communication to an OpenFFBoard, HID and Serial. Each method has its own benefits and drawbacks, which you may wish to consider. Changing between the two communication methods requires very little code changes.
 
 | Communication | Benefits | Drawbacks | General use case |
