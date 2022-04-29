@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using OpenFFBoard;
 
-namespace OpenFFHID
+namespace OpenFFBClient
 {
     class Program
     {
