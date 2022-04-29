@@ -12,17 +12,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - uses: actions/checkout@v2
+    
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.6
       
     - name: Navigate to workspace
       run: cd $GITHUB_WORKSPACE
-      
-    - name: List files
-      run: ls
-      
-    - name: Print current directory
-      run: pwd
      
     - name: Restore NuGet Packages
       run: nuget restore OpenFFBSharp.sln
