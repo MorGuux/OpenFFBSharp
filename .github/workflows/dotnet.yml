@@ -14,6 +14,9 @@ jobs:
     steps:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.6
+      
+    - name: Navigate to workspace
+      run: cd $GITHUB_WORKSPACE
      
     - name: Restore NuGet Packages
       run: nuget restore OpenFFBSharp.sln
