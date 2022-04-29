@@ -1,4 +1,4 @@
-## C# client to interact with an OpenFFBoard
+# OpenFFBSharp - C# client to interact with an OpenFFBoard
 
 There are two methods of communication to an OpenFFBoard, HID and Serial. Each method has its own benefits and drawbacks, which you may wish to consider. Changing between the two communication methods requires very little code changes.
 
