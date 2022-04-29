@@ -24,7 +24,7 @@ jobs:
       run: cd $GITHUB_WORKSPACE
      
     - name: Restore NuGet Packages
-      run: nuget restore OpenFFBSharp.sln
+      run: nuget restore OpenFFBSharp.sln /p:Configuration=Release
       
     - name: Build
       run: msbuild OpenFFBSharp.sln
