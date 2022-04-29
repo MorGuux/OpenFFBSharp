@@ -17,6 +17,9 @@ jobs:
       
     - name: Navigate to workspace
       run: cd $GITHUB_WORKSPACE
+      
+    - name: List files
+      run: ls
      
     - name: Restore NuGet Packages
       run: nuget restore OpenFFBSharp.sln
