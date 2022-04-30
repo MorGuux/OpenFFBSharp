@@ -161,12 +161,21 @@ namespace OpenFFBoard
             }
 
             /// <summary>
-            /// Invert axis
+            /// Get invert axis
             /// </summary>
             /// <returns></returns>
-            public bool InvertAxis()
+            public bool GetInvertAxis()
             {
-                var query = invert.GetResponse(_board, this);
+                return invert.GetValue(_board, this);
+            }
+
+            /// <summary>
+            /// Set invert axis
+            /// </summary>
+            /// <returns></returns>
+            public bool SetInvertAxis(bool newInvert)
+            {
+                var query = invert.SetValue(_board, this, newInvert);
                 return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == invert;
             }
 
