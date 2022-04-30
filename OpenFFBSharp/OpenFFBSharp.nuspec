@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>OpenFFBSharp</id>
-	<version>0.1.5-alpha</version>
+	<version>0.1.6-alpha</version>
 	<title>OpenFFBSharp</title>
     <authors>Morgan Gardner</authors>
 	<owners>Morgan Gardner</owners>
@@ -20,4 +20,5 @@
 		<dependency id="Device.Net" version="4.3.0-beta" />
     </dependencies>
   </metadata>
+  <files />
 </package>
