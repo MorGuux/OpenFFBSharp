@@ -20,17 +20,17 @@ namespace OpenFFBClient
             openFFBoard.Connect();
 
             Console.WriteLine("Power: {0}", openFFBoard.Axis.GetPower());
-            Console.WriteLine("Rotation Degrees: {0}°", openFFBoard.Axis.GetRotationDegrees());
-            Console.WriteLine("Max Speed: {0}", openFFBoard.Axis.GetMaxSpeed());
-            Console.WriteLine("Max Torque Rate: {0}", openFFBoard.Axis.GetMaxTorqueRate());
-            Console.WriteLine("Damper: {0}", openFFBoard.Axis.GetAxisDamper());
-            Console.WriteLine("Endstop Gain: {0}", openFFBoard.Axis.GetEndstopGain());
-            Console.WriteLine("Effects Ratio: {0}", openFFBoard.Axis.GetEffectsRatio());
-            Console.WriteLine("Axis Position: {0}", openFFBoard.Axis.GetAxisPosition());
+            Console.WriteLine("Rotation Degrees: {0}°", openFFBoard.Axis.GetDegrees());
+            Console.WriteLine("Max Speed: {0}", openFFBoard.Axis.GetMaxspeed());
+            Console.WriteLine("Max Torque Rate: {0}", openFFBoard.Axis.GetMaxtorquerate());
+            Console.WriteLine("Damper: {0}", openFFBoard.Axis.GetAxisdamper());
+            Console.WriteLine("Endstop Gain: {0}", openFFBoard.Axis.GetEsgain());
+            Console.WriteLine("Effects Ratio: {0}", openFFBoard.Axis.GetFxratio());
+            Console.WriteLine("Axis Position: {0}", openFFBoard.Axis.GetPos());
 
-            Console.WriteLine("Device ID: {0}", openFFBoard.System.GetDeviceId());
-            Console.WriteLine("Internal Voltage: {0}", openFFBoard.System.GetInternalVoltage());
-            Console.WriteLine("External Voltage: {0}", openFFBoard.System.GetExternalVoltage());
+            Console.WriteLine("Device ID: {0}", openFFBoard.System.GetDevid());
+            Console.WriteLine("Internal Voltage: {0}", openFFBoard.System.GetVint());
+            Console.WriteLine("External Voltage: {0}", openFFBoard.System.GetVext());
 
             Console.ReadKey();
             

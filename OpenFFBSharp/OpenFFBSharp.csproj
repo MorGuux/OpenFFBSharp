@@ -56,5 +56,31 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BoardClasses\Board.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Board.txt</LastGenOutput>
+    </Content>
+    <Content Include="BoardClasses\Board.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Board.tt</DependentUpon>
+    </Content>
+    <Content Include="BoardClasses\Commands.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Commands.txt</LastGenOutput>
+    </Content>
+    <Content Include="BoardClasses\Commands.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Commands.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BoardClasses\csvs\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

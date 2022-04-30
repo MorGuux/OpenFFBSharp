@@ -1,0 +1,247 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ assembly name="$(TargetPath)" #>
+<#@ import namespace="OpenFFBoard" #>
+<#@ import namespace="System.IO" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Globalization" #>
+using OpenFFBoard;
+using System;
+
+namespace OpenFFBoard {
+
+public static class Commands
+    {
+
+<# foreach (string classFile in Directory.GetFiles(this.Host.ResolvePath("csvs"))) { #>
+	public class <#= Path.GetFileNameWithoutExtension(classFile) #> : BoardClass {
+	<#string[] commands = File.ReadAllLines(classFile).Skip(1).ToArray();
+	  string[] classDetails = File.ReadAllLines(classFile)[0].Split(',');#>
+
+		private readonly Board _board;
+		public override ushort ClassId => <#= classDetails[1] #>;
+		public override string Prefix => "<#= classDetails[0] #>";
+
+		internal <#= Path.GetFileNameWithoutExtension(classFile) #>(Board board)
+        {
+			_board = board;
+        }
+
+<# foreach (string command in commands) {
+	string[] parts = command.Split(',');
+	Commands.BoardClass.CmdTypes[] cmdTypes = ConvertCMDTypes(parts[3].TrimStart(' ').Split(' '));#>
+
+		#region <#= parts[0] #>
+		private readonly BoardCommand<<#= parts[4] #>> _<#= parts[0] #> = new BoardCommand<<#= parts[4] #>>("<#= parts[0] #>", <#= parts[1] #>, "<#= parts[2] #>", CmdTypes.<#= ConvertCMDTypesToCSV(cmdTypes) #>);
+	<# if (cmdTypes.Contains(Commands.BoardClass.CmdTypes.Get))
+	{
+		TextInfo myTI = new CultureInfo("en-GB",false).TextInfo;
+		#>
+
+		/// <summary>
+		/// <#= parts[2] #>
+		/// </summary>
+		/// <returns></returns>
+		public <#= parts[4] #> Get<#= myTI.ToTitleCase(parts[0]) #>()
+		{
+			return _<#= parts[0] #>.GetValue(_board, this);
+		}
+	<#} #>
+	<# if (cmdTypes.Contains(Commands.BoardClass.CmdTypes.GetAddress))
+	{
+		TextInfo myTI = new CultureInfo("en-GB",false).TextInfo;
+		#>
+
+		/// <summary>
+		/// <#= parts[2] #>
+		/// </summary>
+		/// <returns></returns>
+		public <#= parts[4] #> Get<#= myTI.ToTitleCase(parts[0]) #>(ulong address)
+		{
+			return _<#= parts[0] #>.GetValue(_board, this, address);
+		}
+	<#} #>
+	<# if (cmdTypes.Contains(Commands.BoardClass.CmdTypes.Set))
+	{
+		TextInfo myTI = new CultureInfo("en-GB",false).TextInfo;
+		#>
+
+		/// <summary>
+		/// <#= parts[2] #>
+		/// </summary>
+		/// <returns></returns>
+		public bool Set<#= myTI.ToTitleCase(parts[0]) #>(<#= parts[4] #> new<#= myTI.ToTitleCase(parts[0]) #>)
+		{
+			var query = _<#= parts[0] #>.SetValue(_board, this, new<#= myTI.ToTitleCase(parts[0]) #>);
+            return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _<#= parts[0] #>;
+		}
+	<#} #>
+	#endregion
+<# } #>
+	}
+<# } #>
+
+public class BoardResponse
+        {
+            public CmdType Type { get; set; }
+            public ushort ClassId { get; set; }
+            public byte Instance { get; set; }
+            public BoardCommand Cmd { get; set; }
+            public object Data { get; set; }
+            public ulong Address { get; set; }
+        }
+
+        public enum CmdType
+        {
+            Write = 0,
+            Request = 1,
+            Info = 2,
+            WriteAddress = 3,
+            RequestAddress = 4,
+            Acknowledgment = 10,
+            NotFound = 13,
+            Notification = 14,
+            Error = 15
+        }
+    }
+
+    public abstract class BoardClass
+    {
+        public abstract ushort ClassId { get; }
+        public abstract string Prefix { get; }
+        [Flags]
+        public enum CmdTypes
+        {
+            Get = 0,
+            GetAddress = 1,
+            Set = 2,
+            SetAddress = 4,
+            Info = 8,
+        }
+    }
+
+    public class BoardCommand<T> : BoardCommand
+    {
+        public override string Name { get; }
+        public override ulong Id { get; }
+        public override string Description { get; }
+
+        public BoardClass.CmdTypes Types { get; set; }
+
+        public BoardCommand(string name, ulong id, string description, BoardClass.CmdTypes types)
+        {
+            this.Name = name;
+            this.Id = id;
+            this.Description = description;
+            this.Types = types;
+        }
+
+        public T GetValue(Board board, BoardClass boardClass)
+        {
+            if (Types.HasFlag(BoardClass.CmdTypes.Get))
+            {
+                Commands.BoardResponse response = board.GetBoardData(boardClass, this);
+                return (T)Convert.ChangeType(response.Data, typeof(T));
+            }
+            else
+            {
+                throw new Exception("Command does not support get request");
+            }   
+        }
+
+        public T GetValue(Board board, BoardClass boardClass, ulong address)
+            {
+                if (Types.HasFlag(BoardClass.CmdTypes.Get))
+                {
+                    Commands.BoardResponse response = board.GetBoardData(boardClass, this, address);
+                    return (T) Convert.ChangeType(response.Data, typeof(T));
+                }
+                else
+                {
+                    throw new Exception("Command does not support get address request");
+                }
+            }
+
+        public Commands.BoardResponse SetValue(Board board, BoardClass boardClass, T value)
+        {
+            if (Types.HasFlag(BoardClass.CmdTypes.Set))
+            {
+                return board.SetBoardData(boardClass, 0, this, value);
+            }
+            else
+            {
+                throw new Exception("Command does not support set request");
+            }
+        }
+
+        public Commands.BoardResponse SetValue(Board board, BoardClass boardClass, T value, ulong address)
+        {
+            if (Types.HasFlag(BoardClass.CmdTypes.Set))
+            {
+                return board.SetBoardData(boardClass, 0, this, value, address);
+            }
+            else
+            {
+                throw new Exception("Command does not support set request");
+            }
+        }
+
+        public string GetInfo(Board board, BoardClass boardClass)
+        {
+            if (Types.HasFlag(BoardClass.CmdTypes.Info))
+            {
+                Commands.BoardResponse response = board.GetBoardData(boardClass, this);
+                return Convert.ToString(response.Data);
+            }
+            else
+            {
+                throw new Exception("Command does not support info request");
+            }
+            
+        }
+
+        public Commands.BoardResponse GetResponse(Board board, BoardClass boardClass)
+        {
+            return board.GetBoardData(boardClass, this);
+        }
+    }
+
+    public abstract class BoardCommand
+    {
+        public abstract string Name { get; }
+        public abstract ulong Id { get; }
+        public abstract string Description { get; }
+    }
+}
+
+<#+
+    public Commands.BoardClass.CmdTypes[] ConvertCMDTypes(string[] types)
+    {
+		return types.Select(c =>
+			{
+				switch (c)
+				{
+					case "R":
+						return Commands.BoardClass.CmdTypes.Get;
+					case "W":
+						return Commands.BoardClass.CmdTypes.Set;
+					case "I":
+						return Commands.BoardClass.CmdTypes.Info;
+					case "RA":
+						return Commands.BoardClass.CmdTypes.GetAddress;
+					case "WA":
+						return Commands.BoardClass.CmdTypes.SetAddress;
+					default:
+						return Commands.BoardClass.CmdTypes.Get;
+				}
+			}).ToArray();
+    }
+#>
+
+<#+
+    public string ConvertCMDTypesToCSV(Commands.BoardClass.CmdTypes[] types)
+    {
+		return types.Select(a => a.ToString()).Aggregate((i, j) => i + " | " + "CmdTypes." + j);
+    }
+#>

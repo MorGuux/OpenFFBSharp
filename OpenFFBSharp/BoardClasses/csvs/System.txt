@@ -1,0 +1,20 @@
+sys.0,0x0,System Commands
+help,0x0,Print system help, R,string
+save,0x1,Write all settings to flash, R,bool
+reboot,0x2,Reset chip, R,bool
+dfu,0x3,reboot into DFU bootloader, R,bool
+lsmain,0x6,List available mainclasses, R,string
+lsactive,0x8,List active classes (Fullname:clsname:inst:clsid:idx), R,string
+vint,0xE,Internal voltage(mV), R,ulong
+vext,0xF,External voltage(mV), R,ulong
+main,0x7,Query or change mainclass, R W,byte
+swver,0x4,Firmware version, R,string
+hwtype,0x5,Hardware type, R,string
+flashraw,0xD,Write value to flash address, WA,ulong
+flashdump,0xC,Read all flash variables (val:adr), R,string
+errors,0xA,Read error states, R,string
+errorsclr,0xB,Reset errors, R,bool
+heapfree,0x11,Memory info, R,ulong
+format,0x9,set format=1 to erase all stored values, W,bool
+debug,0x13,Enable or disable debug commands, R W,bool
+devid,0x14,Get chip dev id and rev id, R,string

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Device.Net;
 using Hid.Net;
 using Hid.Net.Windows;
+using static OpenFFBoard.Commands;
 
 namespace OpenFFBoard
 {
