@@ -88,10 +88,12 @@ namespace OpenFFBoard
             if (_board != null)
             {
                 _board.InitializeAsync().ConfigureAwait(false);
-                IsConnected = _board.IsInitialized;
+                //IsConnected = _board.IsInitialized;
+                IsConnected = true;
             }
             else
             {
+                IsConnected = false;
                 throw new NullReferenceException(
                     "OpenFFBoard not assigned, please use the SetBoard function to assign a board.");
             }
