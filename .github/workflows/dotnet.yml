@@ -33,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v3.0.0
       with:
         name: openffbsharp-dll
-        path: bin/Release/OpenFFBSharp.dll
+        path: OpenFFBClient/bin/Release/OpenFFBSharp.dll
