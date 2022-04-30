@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Ports;
+using static OpenFFBoard.Commands;
 
 namespace OpenFFBoard
 {
