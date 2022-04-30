@@ -120,8 +120,17 @@ namespace OpenFFBoard
 
                 }
             }
-            return null;
 
+            return null;
+        }
+
+        /// <summary>
+        /// Get the name of the COM port
+        /// </summary>
+        /// <returns>COM port name (typically COMx)</returns>
+        public string GetPort()
+        {
+            return serialPort.PortName;
         }
     }
 }
