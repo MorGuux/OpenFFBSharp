@@ -29,6 +29,8 @@ namespace OpenFFBClient
             Console.WriteLine("Axis Position: {0}", openFFBoard.Axis.GetAxisPosition());
 
             Console.WriteLine("Device ID: {0}", openFFBoard.System.GetDeviceId());
+            Console.WriteLine("Internal Voltage: {0}", openFFBoard.System.GetInternalVoltage());
+            Console.WriteLine("External Voltage: {0}", openFFBoard.System.GetExternalVoltage());
 
             Console.ReadKey();
             

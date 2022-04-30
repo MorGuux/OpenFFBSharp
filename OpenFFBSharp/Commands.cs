@@ -370,18 +370,18 @@ namespace OpenFFBoard
             /// Internal voltage (mV)
             /// </summary>
             /// <returns></returns>
-            public ulong GetInternalVoltage()
+            public float GetInternalVoltage()
             {
-                return vint.GetValue(_board, this);
+                return (float)vint.GetValue(_board, this) / 1000;
             }
 
             /// <summary>
             /// External voltage (mV)
             /// </summary>
             /// <returns></returns>
-            public ulong GetExternalVoltage()
+            public float GetExternalVoltage()
             {
-                return vext.GetValue(_board, this);
+                return (float)vext.GetValue(_board, this) / 1000;
             }
 
             /// <summary>
