@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Device.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Device.Net.4.3.0-beta\lib\net45\Device.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Hid.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hid.Net.4.3.0-beta\lib\net45\Hid.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,9 +46,6 @@
     <Compile Include="Hid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -81,6 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BoardClasses\csvs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hid.Net">
+      <Version>4.3.0-beta</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
