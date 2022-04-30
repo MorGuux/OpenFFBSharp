@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>OpenFFBSharp</id>
+	<version>0.1.2-alpha</version>
+	<title>OpenFFBSharp</title>
+    <authors>Morgan Gardner</authors>
+	<owners>Morgan Gardner</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <description>C# client to interface with an OpenFFBoard</description>
+	<summary>C# client to interface with an OpenFFBoard</summary>
+    <releaseNotes>Pre-release build, not fully functional</releaseNotes>
+	<projectUrl>https://github.com/MorGuux/OpenFFBSharp</projectUrl>
+    <copyright>$copyright$</copyright>
+    <tags>openffboard</tags>
+    <dependencies>
+        <dependency id="Hid.Net" version="4.3.0-beta" />
+		<dependency id="Device.Net" version="4.3.0-beta" />
+    </dependencies>
+  </metadata>
+</package>
