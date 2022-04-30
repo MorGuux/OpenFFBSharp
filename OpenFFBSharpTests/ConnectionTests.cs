@@ -20,7 +20,7 @@ namespace OpenFFBSharpTests
         public void HIDConnection()
         {
             var boards = OpenFFBoard.Hid.GetBoardsAsync().Result;
-            Board openFFBoard = new Serial(Serial.GetBoards()[1], 500000);
+            Board openFFBoard = new OpenFFBoard.Hid(boards[0]);
             openFFBoard.Connect();
             Assert.IsTrue(openFFBoard.IsConnected);
             openFFBoard.Disconnect();
