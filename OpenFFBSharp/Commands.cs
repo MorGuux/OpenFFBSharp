@@ -591,9 +591,11 @@ namespace OpenFFBoard
         [Flags]
         public enum CmdTypes
         {
-            Get,
-            Set,
-            Info,
+            Get = 0,
+            GetAddress = 1,
+            Set = 2,
+            SetAddress = 4,
+            Info = 8,
         }
     }
 

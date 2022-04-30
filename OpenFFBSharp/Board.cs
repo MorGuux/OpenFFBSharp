@@ -14,7 +14,9 @@
         public abstract void Connect();
         public abstract void Disconnect();
         public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd);
+        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong address);
         public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd);
+        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd, ulong address);
         public abstract Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0);
     }
 }

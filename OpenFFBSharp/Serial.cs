@@ -51,9 +51,19 @@ namespace OpenFFBoard
             return SendCmd(Commands.CmdType.Request, boardClass, instance, cmd);
         }
 
+        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong address)
+        {
+            return SendCmd(Commands.CmdType.Request, boardClass, instance, cmd, address);
+        }
+
         public override Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd)
         {
             return SendCmd(Commands.CmdType.Request, boardClass, null, cmd);
+        }
+
+        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd, ulong address)
+        {
+            return SendCmd(Commands.CmdType.Request, boardClass, null, cmd, address);
         }
 
         public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0)
