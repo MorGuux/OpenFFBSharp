@@ -11,7 +11,7 @@ tmcHwType,0x3,Version of TMC board, R W I,byte
 encalign,0x4,Align encoder, R,bool
 poles,0x5,Motor pole pairs, R W,byte
 acttrq,0x6,Measure torque and flux, R,string
-pwmlim,0x7,PWM limit, R W,ulong
+pwmlim,0x7,PWM limit, R W D,ulong
 torqueP,0x8,Torque P, R W,ulong
 torqueI,0x9,Torque I, R W,ulong
 fluxP,0xA,Flux P, R W,ulong
@@ -22,14 +22,14 @@ posP,0xE,Pos P, R W,ulong
 posI,0xF,Pos I, R W,ulong
 tmctype,0x10,Version of TMC chip, R,string
 pidPrec,0x11,PID precision bit0=I bit1=P. 0=Q8.8 1= Q4.12, R W,string
-phiesrc,0x12,PhiE source, R W (DEBUG),string
+phiesrc,0x12,PhiE source, R W D,string
 fluxoffset,0x13,Offset flux scale for field weakening, R W,ulong
 seqpi,0x14,Sequential PI, R W,bool
 iScale,0x15,Counts per A, R,string
-encdir,0x16,Encoder dir, R W (DEBUG),byte
+encdir,0x16,Encoder dir, R W D,byte
 abnpol,0x1F,Encoder polarity, R W,ulong
 temp,0x17,Temperature in C, R,float
-reg,0x18,Read or write a TMC register at adr, WA RA,string
+reg,0x18,Read or write a TMC register at adr, WA RA D,string
 svpwm,0x19,Space-vector PWM, R W,string
 autohome,0x1D,Find abn index, R,bool
 abnindex,0x1C,Enable ABN index, R W,bool

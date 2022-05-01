@@ -14,7 +14,7 @@ flashraw,0xD,Write value to flash address, WA,ulong
 flashdump,0xC,Read all flash variables (val:adr), R,string
 errors,0xA,Read error states, R,string
 errorsclr,0xB,Reset errors, R,bool
-heapfree,0x11,Memory info, R,ulong
+heapfree,0x11,Memory info, R,string
 format,0x9,set format=1 to erase all stored values, W,bool
 debug,0x13,Enable or disable debug commands, R W,bool
 devid,0x14,Get chip dev id and rev id, R,string
