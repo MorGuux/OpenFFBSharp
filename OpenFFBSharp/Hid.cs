@@ -118,12 +118,12 @@ namespace OpenFFBoard
             }
         }
 
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false)
+        internal override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false)
         {
             return SendCmdAsync(_board, boardClass, instance, cmd, null, address).Result;
         }
 
-        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address)
+        internal override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address)
         {
             return SendCmdAsync(_board, boardClass, instance, cmd, Convert.ToUInt64(value), address).Result;
         }
