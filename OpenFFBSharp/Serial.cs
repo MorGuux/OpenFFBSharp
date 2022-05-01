@@ -47,50 +47,33 @@ namespace OpenFFBoard
             return SerialPort.GetPortNames();
         }
 
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd)
+        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false)
         {
-            return SendCmd(Commands.CmdType.Request, boardClass, instance, cmd);
+            return SendCmd(boardClass, instance, cmd, address, null, info);
         }
 
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong address)
+        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address)
         {
-            return SendCmd(Commands.CmdType.Request, boardClass, instance, cmd, address);
+            return SendCmd(boardClass, null, cmd, address, value is bool ? (Convert.ToBoolean(value) ? "1" : "0") : Convert.ToString(value), false);
         }
 
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd)
+        public Commands.BoardResponse SendCmd(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)
         {
-            return SendCmd(Commands.CmdType.Request, boardClass, null, cmd);
-        }
-
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd, ulong address)
-        {
-            return SendCmd(Commands.CmdType.Request, boardClass, null, cmd, address);
-        }
-
-        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0)
-        {
-            return SendCmd(Commands.CmdType.Write, boardClass, null, cmd);
-        }
-
-        public Commands.BoardResponse SendCmd(Commands.CmdType type, BoardClass classId, byte? instance, BoardCommand cmd, ulong data = 0, ulong addr = 0)
-        {
-            string cmdBuffer = classId.Prefix + ".";
-            if (instance != null)
-                cmdBuffer += $"{instance}.";
-            cmdBuffer += cmd.Name;
-            switch (type)
+            if (cmd.Types.HasFlag(BoardClass.CmdTypes.Debug))
             {
-                case Commands.CmdType.Request:
-                    cmdBuffer += '?';
-                    break;
-                case Commands.CmdType.Write:
-                    cmdBuffer += '=';
-                    cmdBuffer += data;
-                    break;
-                case Commands.CmdType.Info:
-                    cmdBuffer += '!';
-                    break;
+                BoardCommand<bool> debugCommand = new BoardCommand<bool>("debug", 0x13,
+                    "Enable or disable debug commands", BoardClass.CmdTypes.Get | BoardClass.CmdTypes.Set);
+
+                BoardClass systemClass = new Commands.System(null);
+
+                var debugResponse = SendCmd(systemClass, instance, debugCommand, null, data, false);
+                //make sure debug mode is enabled
+                if ((string)debugResponse.Data == "0")
+                {
+                    throw new InvalidOperationException("OpenFFBoard has debug mode disabled.");
+                }
             }
+            string cmdBuffer = ConstructMessage(classId, instance, cmd, address, data, info);
 
             serialPort.WriteLine(cmdBuffer);
             string response = "";
@@ -117,7 +100,7 @@ namespace OpenFFBoard
                     else
                     {
                         responseData = splitResponse[1];
-                        responseAddr = addr;
+                        responseAddr = address ?? 0;
                     }
                     return new Commands.BoardResponse
                     {
@@ -128,11 +111,71 @@ namespace OpenFFBoard
                         Data = responseData,
                         Address = responseAddr
                     };
-
+                }
+                else
+                {
+                    //response command doesn't match what was sent
+                    if (splitResponse[0] == "sys.0.errors?")
+                    {
+                        //Error message
+                        string[] splitData = splitResponse[1].Trim().Split(':');
+                        return new Commands.BoardResponse
+                        {
+                            Type = Commands.CmdType.Error,
+                            ClassId = classId.ClassId,
+                            Instance = instance ?? 0,
+                            Cmd = cmd,
+                            Data = splitResponse[1],
+                            Address = 0
+                        };
+                    }
                 }
             }
 
             return null;
+        }
+
+        public string ConstructMessage(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)
+        {
+            CmdType type;
+            if (info)
+                type = CmdType.Info;
+            else if (address == null && data == null)
+                type = CmdType.Request;
+            else if (address != null && data == null)
+                type = CmdType.RequestAddress;
+            else if (address == null)
+                type = CmdType.Write;
+            else
+                type = CmdType.WriteAddress;
+
+            string cmdBuffer = classId.Prefix + ".";
+            if (instance != null)
+                cmdBuffer += $"{instance}.";
+            cmdBuffer += cmd.Name;
+
+            switch (type)
+            {
+                case CmdType.Request:
+                    cmdBuffer += '?';
+                    break;
+                case CmdType.RequestAddress:
+                    cmdBuffer += '?';
+                    cmdBuffer += address;
+                    break;
+                case CmdType.Write:
+                    cmdBuffer += '=';
+                    cmdBuffer += data;
+                    break;
+                case CmdType.WriteAddress:
+                    cmdBuffer += '=';
+                    cmdBuffer += address;
+                    break;
+                case CmdType.Info:
+                    cmdBuffer += '!';
+                    break;
+            }
+            return cmdBuffer;
         }
 
         /// <summary>

@@ -57,6 +57,15 @@ namespace OpenFFBoard
 			{
 				return _help.GetValue(_board, this);
 			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region cmduid
@@ -106,6 +115,7 @@ namespace OpenFFBoard
 				var query = _power.SetValue(_board, this, newPower);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _power;
 			}
+
 			#endregion
 
 			#region degrees
@@ -129,6 +139,7 @@ namespace OpenFFBoard
 				var query = _degrees.SetValue(_board, this, newDegrees);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _degrees;
 			}
+
 			#endregion
 
 			#region esgain
@@ -152,6 +163,7 @@ namespace OpenFFBoard
 				var query = _esgain.SetValue(_board, this, newEsgain);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _esgain;
 			}
+
 			#endregion
 
 			#region zeroenc
@@ -188,6 +200,7 @@ namespace OpenFFBoard
 				var query = _invert.SetValue(_board, this, newInvert);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _invert;
 			}
+
 			#endregion
 
 			#region idlespring
@@ -211,6 +224,7 @@ namespace OpenFFBoard
 				var query = _idlespring.SetValue(_board, this, newIdlespring);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _idlespring;
 			}
+
 			#endregion
 
 			#region axisdamper
@@ -234,6 +248,7 @@ namespace OpenFFBoard
 				var query = _axisdamper.SetValue(_board, this, newAxisdamper);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _axisdamper;
 			}
+
 			#endregion
 
 			#region enctype
@@ -257,6 +272,16 @@ namespace OpenFFBoard
 				var query = _enctype.SetValue(_board, this, newEnctype);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _enctype;
 			}
+
+
+			/// <summary>
+			/// Encoder type get/set/list
+			/// </summary>
+			/// <returns></returns>
+			public string GetEnctypeInfo()
+			{
+				return _enctype.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region drvtype
@@ -279,6 +304,16 @@ namespace OpenFFBoard
 			{
 				var query = _drvtype.SetValue(_board, this, newDrvtype);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _drvtype;
+			}
+
+
+			/// <summary>
+			/// Motor driver type get/set/list
+			/// </summary>
+			/// <returns></returns>
+			public string GetDrvtypeInfo()
+			{
+				return _drvtype.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -316,6 +351,7 @@ namespace OpenFFBoard
 				var query = _maxspeed.SetValue(_board, this, newMaxspeed);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _maxspeed;
 			}
+
 			#endregion
 
 			#region maxtorquerate
@@ -339,6 +375,7 @@ namespace OpenFFBoard
 				var query = _maxtorquerate.SetValue(_board, this, newMaxtorquerate);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _maxtorquerate;
 			}
+
 			#endregion
 
 			#region fxratio
@@ -362,6 +399,7 @@ namespace OpenFFBoard
 				var query = _fxratio.SetValue(_board, this, newFxratio);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _fxratio;
 			}
+
 			#endregion
 
 			#region curtorque
@@ -440,6 +478,15 @@ namespace OpenFFBoard
 			{
 				return _help.GetValue(_board, this);
 			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region cmduid
@@ -489,6 +536,7 @@ namespace OpenFFBoard
 				var query = _filterCfFreq.SetValue(_board, this, newFiltercffreq);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _filterCfFreq;
 			}
+
 			#endregion
 
 			#region filterCfQ
@@ -512,6 +560,7 @@ namespace OpenFFBoard
 				var query = _filterCfQ.SetValue(_board, this, newFiltercfq);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _filterCfQ;
 			}
+
 			#endregion
 
 			#region spring
@@ -534,6 +583,16 @@ namespace OpenFFBoard
 			{
 				var query = _spring.SetValue(_board, this, newSpring);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _spring;
+			}
+
+
+			/// <summary>
+			/// Spring gain
+			/// </summary>
+			/// <returns></returns>
+			public string GetSpringInfo()
+			{
+				return _spring.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -558,6 +617,16 @@ namespace OpenFFBoard
 				var query = _friction.SetValue(_board, this, newFriction);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _friction;
 			}
+
+
+			/// <summary>
+			/// Friction gain
+			/// </summary>
+			/// <returns></returns>
+			public string GetFrictionInfo()
+			{
+				return _friction.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region damper
@@ -580,6 +649,16 @@ namespace OpenFFBoard
 			{
 				var query = _damper.SetValue(_board, this, newDamper);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _damper;
+			}
+
+
+			/// <summary>
+			/// Damper gain
+			/// </summary>
+			/// <returns></returns>
+			public string GetDamperInfo()
+			{
+				return _damper.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -604,6 +683,16 @@ namespace OpenFFBoard
 				var query = _inertia.SetValue(_board, this, newInertia);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _inertia;
 			}
+
+
+			/// <summary>
+			/// Inertia gain
+			/// </summary>
+			/// <returns></returns>
+			public string GetInertiaInfo()
+			{
+				return _inertia.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region effects
@@ -627,6 +716,7 @@ namespace OpenFFBoard
 				var query = _effects.SetValue(_board, this, newEffects);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _effects;
 			}
+
 			#endregion
 		}
 		public class Main : BoardClass
@@ -678,6 +768,15 @@ namespace OpenFFBoard
 			public string GetHelp()
 			{
 				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -832,6 +931,7 @@ namespace OpenFFBoard
 				var query = _hidsendspd.SetValue(_board, this, newHidsendspd);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _hidsendspd;
 			}
+
 			#endregion
 		}
 		public class System : BoardClass
@@ -972,6 +1072,7 @@ namespace OpenFFBoard
 				var query = _main.SetValue(_board, this, newMain);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _main;
 			}
+
 			#endregion
 
 			#region swver
@@ -1002,6 +1103,16 @@ namespace OpenFFBoard
 
 			#region flashraw
 			private readonly BoardCommand<ulong> _flashraw = new BoardCommand<ulong>("flashraw", 0xD, "Write value to flash address", CmdTypes.SetAddress);
+
+			/// <summary>
+			/// Write value to flash address
+			/// </summary>
+			/// <returns></returns>
+			public bool SetFlashraw(ulong newFlashraw, ulong address)
+			{
+				var query = _flashraw.SetValue(_board, this, newFlashraw, address);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _flashraw;
+			}
 			#endregion
 
 			#region flashdump
@@ -1044,13 +1155,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region heapfree
-			private readonly BoardCommand<ulong> _heapfree = new BoardCommand<ulong>("heapfree", 0x11, "Memory info", CmdTypes.Get);
+			private readonly BoardCommand<string> _heapfree = new BoardCommand<string>("heapfree", 0x11, "Memory info", CmdTypes.Get);
 
 			/// <summary>
 			/// Memory info
 			/// </summary>
 			/// <returns></returns>
-			public ulong GetHeapfree()
+			public string GetHeapfree()
 			{
 				return _heapfree.GetValue(_board, this);
 			}
@@ -1068,6 +1179,7 @@ namespace OpenFFBoard
 				var query = _format.SetValue(_board, this, newFormat);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _format;
 			}
+
 			#endregion
 
 			#region debug
@@ -1091,6 +1203,7 @@ namespace OpenFFBoard
 				var query = _debug.SetValue(_board, this, newDebug);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _debug;
 			}
+
 			#endregion
 
 			#region devid
@@ -1156,6 +1269,15 @@ namespace OpenFFBoard
 			{
 				return _help.GetValue(_board, this);
 			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region cmduid
@@ -1205,6 +1327,7 @@ namespace OpenFFBoard
 				var query = _cpr.SetValue(_board, this, newCpr);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _cpr;
 			}
+
 			#endregion
 
 			#region mtype
@@ -1227,6 +1350,16 @@ namespace OpenFFBoard
 			{
 				var query = _mtype.SetValue(_board, this, newMtype);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mtype;
+			}
+
+
+			/// <summary>
+			/// Motor type
+			/// </summary>
+			/// <returns></returns>
+			public string GetMtypeInfo()
+			{
+				return _mtype.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -1251,6 +1384,16 @@ namespace OpenFFBoard
 				var query = _encsrc.SetValue(_board, this, newEncsrc);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _encsrc;
 			}
+
+
+			/// <summary>
+			/// Encoder source
+			/// </summary>
+			/// <returns></returns>
+			public string GetEncsrcInfo()
+			{
+				return _encsrc.GetInfo(_board, this);
+			}
 			#endregion
 
 			#region tmcHwType
@@ -1273,6 +1416,16 @@ namespace OpenFFBoard
 			{
 				var query = _tmcHwType.SetValue(_board, this, newTmchwtype);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _tmcHwType;
+			}
+
+
+			/// <summary>
+			/// Version of TMC board
+			/// </summary>
+			/// <returns></returns>
+			public string GetTmchwtypeInfo()
+			{
+				return _tmcHwType.GetInfo(_board, this);
 			}
 			#endregion
 
@@ -1310,6 +1463,7 @@ namespace OpenFFBoard
 				var query = _poles.SetValue(_board, this, newPoles);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _poles;
 			}
+
 			#endregion
 
 			#region acttrq
@@ -1326,7 +1480,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region pwmlim
-			private readonly BoardCommand<ulong> _pwmlim = new BoardCommand<ulong>("pwmlim", 0x7, "PWM limit", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<ulong> _pwmlim = new BoardCommand<ulong>("pwmlim", 0x7, "PWM limit", CmdTypes.Get | CmdTypes.Set | CmdTypes.Debug);
 
 			/// <summary>
 			/// PWM limit
@@ -1346,6 +1500,7 @@ namespace OpenFFBoard
 				var query = _pwmlim.SetValue(_board, this, newPwmlim);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _pwmlim;
 			}
+
 			#endregion
 
 			#region torqueP
@@ -1369,6 +1524,7 @@ namespace OpenFFBoard
 				var query = _torqueP.SetValue(_board, this, newTorquep);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _torqueP;
 			}
+
 			#endregion
 
 			#region torqueI
@@ -1392,6 +1548,7 @@ namespace OpenFFBoard
 				var query = _torqueI.SetValue(_board, this, newTorquei);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _torqueI;
 			}
+
 			#endregion
 
 			#region fluxP
@@ -1415,6 +1572,7 @@ namespace OpenFFBoard
 				var query = _fluxP.SetValue(_board, this, newFluxp);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _fluxP;
 			}
+
 			#endregion
 
 			#region fluxI
@@ -1438,6 +1596,7 @@ namespace OpenFFBoard
 				var query = _fluxI.SetValue(_board, this, newFluxi);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _fluxI;
 			}
+
 			#endregion
 
 			#region velocityP
@@ -1461,6 +1620,7 @@ namespace OpenFFBoard
 				var query = _velocityP.SetValue(_board, this, newVelocityp);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _velocityP;
 			}
+
 			#endregion
 
 			#region velocityI
@@ -1484,6 +1644,7 @@ namespace OpenFFBoard
 				var query = _velocityI.SetValue(_board, this, newVelocityi);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _velocityI;
 			}
+
 			#endregion
 
 			#region posP
@@ -1507,6 +1668,7 @@ namespace OpenFFBoard
 				var query = _posP.SetValue(_board, this, newPosp);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _posP;
 			}
+
 			#endregion
 
 			#region posI
@@ -1530,6 +1692,7 @@ namespace OpenFFBoard
 				var query = _posI.SetValue(_board, this, newPosi);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _posI;
 			}
+
 			#endregion
 
 			#region tmctype
@@ -1566,10 +1729,11 @@ namespace OpenFFBoard
 				var query = _pidPrec.SetValue(_board, this, newPidprec);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _pidPrec;
 			}
+
 			#endregion
 
 			#region phiesrc
-			private readonly BoardCommand<string> _phiesrc = new BoardCommand<string>("phiesrc", 0x12, "PhiE source", CmdTypes.Get | CmdTypes.Set | CmdTypes.Get);
+			private readonly BoardCommand<string> _phiesrc = new BoardCommand<string>("phiesrc", 0x12, "PhiE source", CmdTypes.Get | CmdTypes.Set | CmdTypes.Debug);
 
 			/// <summary>
 			/// PhiE source
@@ -1589,6 +1753,7 @@ namespace OpenFFBoard
 				var query = _phiesrc.SetValue(_board, this, newPhiesrc);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _phiesrc;
 			}
+
 			#endregion
 
 			#region fluxoffset
@@ -1612,6 +1777,7 @@ namespace OpenFFBoard
 				var query = _fluxoffset.SetValue(_board, this, newFluxoffset);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _fluxoffset;
 			}
+
 			#endregion
 
 			#region seqpi
@@ -1635,6 +1801,7 @@ namespace OpenFFBoard
 				var query = _seqpi.SetValue(_board, this, newSeqpi);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _seqpi;
 			}
+
 			#endregion
 
 			#region iScale
@@ -1651,7 +1818,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region encdir
-			private readonly BoardCommand<byte> _encdir = new BoardCommand<byte>("encdir", 0x16, "Encoder dir", CmdTypes.Get | CmdTypes.Set | CmdTypes.Get);
+			private readonly BoardCommand<byte> _encdir = new BoardCommand<byte>("encdir", 0x16, "Encoder dir", CmdTypes.Get | CmdTypes.Set | CmdTypes.Debug);
 
 			/// <summary>
 			/// Encoder dir
@@ -1671,6 +1838,7 @@ namespace OpenFFBoard
 				var query = _encdir.SetValue(_board, this, newEncdir);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _encdir;
 			}
+
 			#endregion
 
 			#region abnpol
@@ -1694,6 +1862,7 @@ namespace OpenFFBoard
 				var query = _abnpol.SetValue(_board, this, newAbnpol);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _abnpol;
 			}
+
 			#endregion
 
 			#region temp
@@ -1710,7 +1879,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region reg
-			private readonly BoardCommand<string> _reg = new BoardCommand<string>("reg", 0x18, "Read or write a TMC register at adr", CmdTypes.SetAddress | CmdTypes.GetAddress);
+			private readonly BoardCommand<string> _reg = new BoardCommand<string>("reg", 0x18, "Read or write a TMC register at adr", CmdTypes.SetAddress | CmdTypes.GetAddress | CmdTypes.Debug);
 
 			/// <summary>
 			/// Read or write a TMC register at adr
@@ -1719,6 +1888,16 @@ namespace OpenFFBoard
 			public string GetReg(ulong address)
 			{
 				return _reg.GetValue(_board, this, address);
+			}
+
+			/// <summary>
+			/// Read or write a TMC register at adr
+			/// </summary>
+			/// <returns></returns>
+			public bool SetReg(string newReg, ulong address)
+			{
+				var query = _reg.SetValue(_board, this, newReg, address);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _reg;
 			}
 			#endregion
 
@@ -1743,6 +1922,7 @@ namespace OpenFFBoard
 				var query = _svpwm.SetValue(_board, this, newSvpwm);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _svpwm;
 			}
+
 			#endregion
 
 			#region autohome
@@ -1779,6 +1959,7 @@ namespace OpenFFBoard
 				var query = _abnindex.SetValue(_board, this, newAbnindex);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _abnindex;
 			}
+
 			#endregion
 
 			#region calibrate
@@ -1841,6 +2022,7 @@ namespace OpenFFBoard
 				var query = _combineEncoder.SetValue(_board, this, newCombineencoder);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _combineEncoder;
 			}
+
 			#endregion
 
 			#region invertForce
@@ -1864,6 +2046,7 @@ namespace OpenFFBoard
 				var query = _invertForce.SetValue(_board, this, newInvertforce);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _invertForce;
 			}
+
 			#endregion
 
 			#region vm
@@ -1929,6 +2112,7 @@ namespace OpenFFBoard
 			Set = 2,
 			SetAddress = 4,
 			Info = 8,
+			Debug = 16
 		}
 	}
 
@@ -1938,7 +2122,7 @@ namespace OpenFFBoard
 		public override ulong Id { get; }
 		public override string Description { get; }
 
-		public BoardClass.CmdTypes Types { get; set; }
+		public override BoardClass.CmdTypes Types { get; set; }
 
 		public BoardCommand(string name, ulong id, string description, BoardClass.CmdTypes types)
 		{
@@ -1952,38 +2136,40 @@ namespace OpenFFBoard
 		{
 			if (Types.HasFlag(BoardClass.CmdTypes.Get))
 			{
-				Commands.BoardResponse response = board.GetBoardData(boardClass, this);
+				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, null);
+				if (response.Type == Commands.CmdType.Error || response.Type == Commands.CmdType.NotFound)
+					return default;
+				if (Convert.ToString(response.Data) == "OK")
+					return (T)Convert.ChangeType(true, typeof(T));
+
+				if (typeof(T) == typeof(bool))
+					return (T)Convert.ChangeType(Convert.ToString(response.Data) == "1", typeof(T));
+
 				return (T)Convert.ChangeType(response.Data, typeof(T));
 			}
-			else
-			{
-				throw new Exception("Command does not support get request");
-			}
+
+			throw new Exception("Command does not support get request");
 		}
 
-		public T GetValue(Board board, BoardClass boardClass, ulong address)
+		public T GetValue(Board board, BoardClass boardClass, ulong? address)
 		{
 			if (Types.HasFlag(BoardClass.CmdTypes.Get))
 			{
-				Commands.BoardResponse response = board.GetBoardData(boardClass, this, address);
+				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, address);
 				return (T)Convert.ChangeType(response.Data, typeof(T));
 			}
-			else
-			{
-				throw new Exception("Command does not support get address request");
-			}
+
+			throw new Exception("Command does not support get address request");
 		}
 
 		public Commands.BoardResponse SetValue(Board board, BoardClass boardClass, T value)
 		{
 			if (Types.HasFlag(BoardClass.CmdTypes.Set))
 			{
-				return board.SetBoardData(boardClass, 0, this, value);
+				return board.SetBoardData(boardClass, 0, this, value, null);
 			}
-			else
-			{
-				throw new Exception("Command does not support set request");
-			}
+
+			throw new Exception("Command does not support set request");
 		}
 
 		public Commands.BoardResponse SetValue(Board board, BoardClass boardClass, T value, ulong address)
@@ -1992,29 +2178,19 @@ namespace OpenFFBoard
 			{
 				return board.SetBoardData(boardClass, 0, this, value, address);
 			}
-			else
-			{
-				throw new Exception("Command does not support set request");
-			}
+
+			throw new Exception("Command does not support set address request");
 		}
 
 		public string GetInfo(Board board, BoardClass boardClass)
 		{
 			if (Types.HasFlag(BoardClass.CmdTypes.Info))
 			{
-				Commands.BoardResponse response = board.GetBoardData(boardClass, this);
+				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, null, true);
 				return Convert.ToString(response.Data);
 			}
-			else
-			{
-				throw new Exception("Command does not support info request");
-			}
 
-		}
-
-		public Commands.BoardResponse GetResponse(Board board, BoardClass boardClass)
-		{
-			return board.GetBoardData(boardClass, this);
+			throw new Exception("Command does not support info request");
 		}
 	}
 
@@ -2023,6 +2199,7 @@ namespace OpenFFBoard
 		public abstract string Name { get; }
 		public abstract ulong Id { get; }
 		public abstract string Description { get; }
+		public abstract BoardClass.CmdTypes Types { get; set; }
 	}
 }
 
