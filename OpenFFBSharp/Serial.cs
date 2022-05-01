@@ -1,44 +1,67 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
+using System.Threading.Tasks;
 using static OpenFFBoard.Commands;
 
 namespace OpenFFBoard
 {
     public class Serial : Board
     {
+        private readonly SerialPort _serialPort;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
-        private readonly SerialPort serialPort;
+        internal class SerialCommand
+        {
+            public readonly BoardClass boardClass;
+            public readonly byte? instance;
+            public readonly BoardCommand cmd;
+            public readonly ulong? address;
+            public readonly string data;
+            public readonly bool info = false;
+
+            public SerialCommand(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, string data, bool info = false)
+            {
+                this.boardClass = boardClass;
+                this.instance = instance;
+                this.cmd = cmd;
+                this.address = address;
+                this.data = data;
+                this.info = info;
+            }
+        }
 
         public Serial(string comPort, int baudRate)
         {
-            serialPort = new SerialPort(comPort, baudRate);
+            _serialPort = new SerialPort(comPort, baudRate);
         }
 
         public override void Connect()
         {
-            serialPort.Handshake = Handshake.None;
-            serialPort.Parity = Parity.None;
-            serialPort.DataBits = 8;
-            serialPort.StopBits = StopBits.One;
-            serialPort.DtrEnable = true;
-            serialPort.ReadTimeout = 200;
-            serialPort.WriteTimeout = 50;
+            _serialPort.Handshake = Handshake.None;
+            _serialPort.Parity = Parity.None;
+            _serialPort.DataBits = 8;
+            _serialPort.StopBits = StopBits.One;
+            _serialPort.DtrEnable = true;
+            _serialPort.ReadTimeout = 200;
+            _serialPort.WriteTimeout = 50;
             try
             {
-                serialPort.Open();
-                IsConnected = serialPort.IsOpen;
+                _serialPort.Open();
+                IsConnected = _serialPort.IsOpen;
             }
             catch
             {
                 IsConnected = false;
-                throw new IOException("Could not connect to the OpenFFBoard on " + serialPort.PortName);
+                throw new IOException("Could not connect to the OpenFFBoard on " + _serialPort.PortName);
             }
         }
 
         public override void Disconnect()
         {
-            serialPort.Close();
+            _serialPort.Close();
         }
 
         public static string[] GetBoards()
@@ -47,14 +70,69 @@ namespace OpenFFBoard
             return SerialPort.GetPortNames();
         }
 
-        public override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false)
+        internal override Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false)
         {
-            return SendCmd(boardClass, instance, cmd, address, null, info);
+            SerialCommand command = new SerialCommand(boardClass, instance, cmd, address, null, info);
+            return Task.Run(() => SendCmd(command)).Result;
         }
 
-        public override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address)
+        internal override Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address)
         {
-            return SendCmd(boardClass, null, cmd, address, value is bool ? (Convert.ToBoolean(value) ? "1" : "0") : Convert.ToString(value), false);
+            SerialCommand command = new SerialCommand(boardClass, instance, cmd, address, value is bool ? (Convert.ToBoolean(value) ? "1" : "0") : Convert.ToString(value), false);
+            return Task.Run(() => SendCmd(command)).Result;
+        }
+
+        internal async Task<BoardResponse> SendCmd(SerialCommand cmd)
+        {
+            await _semaphore.WaitAsync();
+            string response;
+            try
+            {
+                await WriteLineAsync(ConstructMessage(cmd));
+                response = await ReadCommandAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+            return Task.Run(() => ParseBoardResponse(cmd, response)).Result;
+        }
+
+        /// <summary>
+        /// Read a line from the SerialPort asynchronously
+        /// </summary>
+        /// <returns>A raw command read from the input</returns>
+        public async Task<string> ReadCommandAsync()
+        {
+            byte[] buffer = new byte[1];
+            string ret = string.Empty;
+
+            // Read the input one byte at a time, convert the
+            // byte into a char, add that char to the overall
+            // response string, once the response string ends
+            // with the line ending then stop reading
+            while (true)
+            {
+                await _serialPort.BaseStream.ReadAsync(buffer, 0, 1);
+                ret += _serialPort.Encoding.GetString(buffer);
+
+                if (ret.EndsWith("]"))
+                    return ret.Trim();
+            }
+        }
+
+        /// <summary>
+        /// Write a line to the SerialPort asynchronously
+        /// </summary>
+        /// <param name="str">The text to send</param>
+        /// <returns></returns>
+        public async Task WriteLineAsync(string str)
+        {
+            byte[] encodedStr =
+                _serialPort.Encoding.GetBytes(str + _serialPort.NewLine);
+
+            await _serialPort.BaseStream.WriteAsync(encodedStr, 0, encodedStr.Length);
+            await _serialPort.BaseStream.FlushAsync();
         }
 
         public Commands.BoardResponse SendCmd(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)
@@ -75,19 +153,24 @@ namespace OpenFFBoard
             }
             string cmdBuffer = ConstructMessage(classId, instance, cmd, address, data, info);
 
-            serialPort.WriteLine(cmdBuffer);
+            _serialPort.WriteLine(cmdBuffer);
             string response = "";
             do
-                response += serialPort.ReadExisting();
+                response += _serialPort.ReadExisting();
             while (!response.Contains("]"));
-            response = response.Trim();
+            return ParseBoardResponse(new SerialCommand(classId, instance, cmd, address, data, info), response);
+        }
+
+        private BoardResponse ParseBoardResponse(SerialCommand cmd, string response)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
 
             if (response.StartsWith("["))
             {
                 response = response.TrimStart('[');
                 response = response.TrimEnd(']');
                 string[] splitResponse = response.Split('|');
-                if (splitResponse[0] == cmdBuffer)
+                if (splitResponse[0] == ConstructMessage(cmd))
                 {
                     string[] splitData = splitResponse[1].Split(new char[':'], 1);
                     string responseData;
@@ -100,14 +183,15 @@ namespace OpenFFBoard
                     else
                     {
                         responseData = splitResponse[1];
-                        responseAddr = address ?? 0;
+                        responseAddr = cmd.address ?? 0;
                     }
+                    
                     return new Commands.BoardResponse
                     {
-                        Type = (Commands.CmdType)cmd.Id,
-                        ClassId = classId.ClassId,
-                        Instance = instance ?? 0,
-                        Cmd = cmd,
+                        Type = (Commands.CmdType)cmd.cmd.Id,
+                        ClassId = cmd.boardClass.ClassId,
+                        Instance = cmd.instance ?? 0,
+                        Cmd = cmd.cmd,
                         Data = responseData,
                         Address = responseAddr
                     };
@@ -122,9 +206,9 @@ namespace OpenFFBoard
                         return new Commands.BoardResponse
                         {
                             Type = Commands.CmdType.Error,
-                            ClassId = classId.ClassId,
-                            Instance = instance ?? 0,
-                            Cmd = cmd,
+                            ClassId = cmd.boardClass.ClassId,
+                            Instance = cmd.instance ?? 0,
+                            Cmd = cmd.cmd,
                             Data = splitResponse[1],
                             Address = 0
                         };
@@ -135,7 +219,7 @@ namespace OpenFFBoard
             return null;
         }
 
-        public string ConstructMessage(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)
+        private static string ConstructMessage(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)
         {
             CmdType type;
             if (info)
@@ -178,13 +262,24 @@ namespace OpenFFBoard
             return cmdBuffer;
         }
 
+        private static string ConstructMessage(SerialCommand command)
+        {
+            return ConstructMessage(
+                command.boardClass, 
+                command.instance, 
+                command.cmd, 
+                command.address, 
+                command.data,
+                command.info);
+        }
+
         /// <summary>
         /// Get the name of the COM port
         /// </summary>
         /// <returns>COM port name (typically COMx)</returns>
         public string GetPort()
         {
-            return serialPort.PortName;
+            return _serialPort.PortName;
         }
     }
 }
