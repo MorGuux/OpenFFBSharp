@@ -12,6 +12,7 @@ namespace OpenFFBoard
     {
         private readonly SerialPort _serialPort;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private const int Timeout = 500;
 
         internal class SerialCommand
         {
@@ -52,10 +53,10 @@ namespace OpenFFBoard
                 _serialPort.Open();
                 IsConnected = _serialPort.IsOpen;
             }
-            catch
+            catch(Exception ex)
             {
                 IsConnected = false;
-                throw new IOException("Could not connect to the OpenFFBoard on " + _serialPort.PortName);
+                throw new IOException("Could not connect to the OpenFFBoard on " + _serialPort.PortName, ex);
             }
         }
 
@@ -89,7 +90,21 @@ namespace OpenFFBoard
             try
             {
                 await WriteLineAsync(ConstructMessage(cmd));
-                response = await ReadCommandAsync();
+
+                var task = ReadCommandAsync();
+                if (await Task.WhenAny(task, Task.Delay(Timeout)) == task)
+                {
+                    await task;
+                    response = task.Result;
+                }
+                else
+                {
+                    response = null;
+                }
+            }
+            catch (IOException)
+            {
+                return null;
             }
             finally
             {
@@ -104,20 +119,28 @@ namespace OpenFFBoard
         /// <returns>A raw command read from the input</returns>
         public async Task<string> ReadCommandAsync()
         {
-            byte[] buffer = new byte[1];
-            string ret = string.Empty;
-
-            // Read the input one byte at a time, convert the
-            // byte into a char, add that char to the overall
-            // response string, once the response string ends
-            // with the line ending then stop reading
-            while (true)
+            try
             {
-                await _serialPort.BaseStream.ReadAsync(buffer, 0, 1);
-                ret += _serialPort.Encoding.GetString(buffer);
+                byte[] buffer = new byte[1];
+                string ret = string.Empty;
 
-                if (ret.EndsWith("]"))
-                    return ret.Trim();
+                // Read the input one byte at a time, convert the
+                // byte into a char, add that char to the overall
+                // response string, once the response string ends
+                // with the line ending then stop reading
+                while (true)
+                {
+                    await _serialPort.BaseStream.ReadAsync(buffer, 0, 1);
+                    ret += _serialPort.Encoding.GetString(buffer);
+
+                    if (ret.EndsWith("]"))
+                        return ret.Trim();
+                }
+            }
+            catch (Exception ex)
+            {
+                IsConnected = false;
+                throw new IOException("Could not read data from the OpenFFBoard.", ex);
             }
         }
 
@@ -128,11 +151,20 @@ namespace OpenFFBoard
         /// <returns></returns>
         public async Task WriteLineAsync(string str)
         {
-            byte[] encodedStr =
-                _serialPort.Encoding.GetBytes(str + _serialPort.NewLine);
+            try
+            {
+                byte[] encodedStr =
+                    _serialPort.Encoding.GetBytes(str + _serialPort.NewLine);
 
-            await _serialPort.BaseStream.WriteAsync(encodedStr, 0, encodedStr.Length);
-            await _serialPort.BaseStream.FlushAsync();
+                await _serialPort.BaseStream.WriteAsync(encodedStr, 0, encodedStr.Length);
+                await _serialPort.BaseStream.FlushAsync();
+            }
+            catch (Exception ex)
+            {
+                IsConnected = false;
+                throw new IOException("Could not write data to the OpenFFBoard.", ex);
+            }
+            
         }
 
         public Commands.BoardResponse SendCmd(BoardClass classId, byte? instance, BoardCommand cmd, ulong? address, string data, bool info)

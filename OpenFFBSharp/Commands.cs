@@ -1,5 +1,6 @@
 ﻿using OpenFFBoard;
 using System;
+using System.IO;
 
 namespace OpenFFBoard
 {
@@ -2137,6 +2138,9 @@ namespace OpenFFBoard
 			if (Types.HasFlag(BoardClass.CmdTypes.Get))
 			{
 				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, null);
+                if (response == null)
+                    throw new IOException("Could not get a response from the OpenFFBoard.");
+
 				if (response.Type == Commands.CmdType.Error || response.Type == Commands.CmdType.NotFound)
 					return default;
 				if (Convert.ToString(response.Data) == "OK")
