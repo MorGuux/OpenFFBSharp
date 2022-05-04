@@ -99,7 +99,7 @@ namespace OpenFFBoard
                 }
                 else
                 {
-                    response = null;
+                    return null;
                 }
             }
             catch (IOException)
@@ -191,6 +191,40 @@ namespace OpenFFBoard
                 response += _serialPort.ReadExisting();
             while (!response.Contains("]"));
             return ParseBoardResponse(new SerialCommand(classId, instance, cmd, address, data, info), response);
+        }
+
+        public async Task<string> SendRawMessage(string message)
+        {
+            Debug.WriteLine($"Raw message waiting for place in serial queue: {message}");
+            await _semaphore.WaitAsync();
+            Debug.WriteLine($"Place found, sending raw message: {message}");
+            string response;
+            try
+            {
+                await WriteLineAsync(message);
+
+                var task = ReadCommandAsync();
+                if (await Task.WhenAny(task, Task.Delay(Timeout)) == task)
+                {
+                    await task;
+                    response = task.Result;
+                    Debug.WriteLine($"Raw message response received: {response}");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (IOException)
+            {
+                return null;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+
+            return response;
         }
 
         private BoardResponse ParseBoardResponse(SerialCommand cmd, string response)

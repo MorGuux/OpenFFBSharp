@@ -13,7 +13,7 @@ namespace OpenFFBoard
 
 			private readonly Board _board;
 			public override ushort ClassId => 0xA01;
-			public override string Prefix => "axis.0";
+			public override string Prefix => "axis";
 
 			internal Axis(Board board)
 			{
@@ -434,7 +434,7 @@ namespace OpenFFBoard
 
 			private readonly Board _board;
 			public override ushort ClassId => 0xA02;
-			public override string Prefix => "fx.0";
+			public override string Prefix => "fx";
 
 			internal FX(Board board)
 			{
@@ -725,7 +725,7 @@ namespace OpenFFBoard
 
 			private readonly Board _board;
 			public override ushort ClassId => 0x1;
-			public override string Prefix => "main.0";
+			public override string Prefix => "main";
 
 			internal Main(Board board)
 			{
@@ -940,7 +940,7 @@ namespace OpenFFBoard
 
 			private readonly Board _board;
 			public override ushort ClassId => 0x0;
-			public override string Prefix => "sys.0";
+			public override string Prefix => "sys";
 
 			internal System(Board board)
 			{
@@ -1225,7 +1225,7 @@ namespace OpenFFBoard
 
 			private readonly Board _board;
 			public override ushort ClassId => 0x81;
-			public override string Prefix => "tmc.0";
+			public override string Prefix => "tmc";
 
 			internal TMC(Board board)
 			{
