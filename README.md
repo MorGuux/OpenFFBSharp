@@ -28,7 +28,7 @@ var boards = OpenFFBoard.Serial.GetBoards();
 ```
 then you can declare a new OpenFFBoard object from the first connected board
 ```C#
-OpenFFBoard.Board openFFBoard = new OpenFFBoard.Hid(boards[0]);
+OpenFFBoard.Board openFFBoard = new OpenFFBoard.Serial(boards[0]);
 ```
 
 ## Initialisation
