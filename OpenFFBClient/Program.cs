@@ -93,10 +93,10 @@ namespace OpenFFBClient
             Console.WriteLine("Instance: {0}", openFFBoard.Main.GetInstance());
             Console.WriteLine("FFB Active: {0}", openFFBoard.Main.GetFfbactive());
             Console.WriteLine("Enabled button sources: {0}", openFFBoard.Main.GetBtntypes());
-            Console.WriteLine("Enable button source: {0}", openFFBoard.Main.GetAddbtn());
+            //Console.WriteLine("Enable button source: {0}", openFFBoard.Main.SetAddbtn(1));
             Console.WriteLine("List available button sources: {0}", openFFBoard.Main.GetLsbtn());
             Console.WriteLine("Enabled analog sources: {0}", openFFBoard.Main.GetAintypes());
-            Console.WriteLine("Enable analog source: {0}", openFFBoard.Main.GetAddain());
+            //Console.WriteLine("Enable analog source: {0}", openFFBoard.Main.SetAddain(1));
             Console.WriteLine("List available analog sources: {0}", openFFBoard.Main.GetLsbtn());
             Console.WriteLine("HID rate: {0}", openFFBoard.Main.GetHidrate());
             Console.WriteLine("HID send speed: {0}", openFFBoard.Main.GetHidsendspd());
@@ -104,74 +104,74 @@ namespace OpenFFBClient
 
             #region TMC
             Console.WriteLine("---TMC4671---");
-            Console.WriteLine("ID: {0}", openFFBoard.TMC.GetId());
-            Console.WriteLine("Name: {0}", openFFBoard.TMC.GetName());
-            //Console.WriteLine("Help: {0}", openFFBoard.TMC.GetHelp());
-            Console.WriteLine("CMDUID: {0}", openFFBoard.TMC.GetCmduid());
-            Console.WriteLine("Instance: {0}", openFFBoard.TMC.GetInstance());
-            Console.WriteLine("Encoder CPR: {0}", openFFBoard.TMC.GetCpr());
-            Console.WriteLine("Motor type: {0}", openFFBoard.TMC.GetMtype());
-            Console.WriteLine("Encoder source: {0}", openFFBoard.TMC.GetEncsrc());
-            Console.WriteLine("Hardware version: {0}", openFFBoard.TMC.GetTmchwtype());
-            //Console.WriteLine("Align encoder: {0}", openFFBoard.TMC.GetEncalign());
-            Console.WriteLine("Motor pole pairs: {0}", openFFBoard.TMC.GetPoles());
-            Console.WriteLine("Torque and flux: {0}", openFFBoard.TMC.GetActtrq());
+            Console.WriteLine("ID: {0}", openFFBoard.TMC4671Driver.GetId());
+            Console.WriteLine("Name: {0}", openFFBoard.TMC4671Driver.GetName());
+            //Console.WriteLine("Help: {0}", openFFBoard.TMC4671Driver.GetHelp());
+            Console.WriteLine("CMDUID: {0}", openFFBoard.TMC4671Driver.GetCmduid());
+            Console.WriteLine("Instance: {0}", openFFBoard.TMC4671Driver.GetInstance());
+            Console.WriteLine("Encoder CPR: {0}", openFFBoard.TMC4671Driver.GetCpr());
+            Console.WriteLine("Motor type: {0}", openFFBoard.TMC4671Driver.GetMtype());
+            Console.WriteLine("Encoder source: {0}", openFFBoard.TMC4671Driver.GetEncsrc());
+            Console.WriteLine("Hardware version: {0}", openFFBoard.TMC4671Driver.GetTmchwtype());
+            //Console.WriteLine("Align encoder: {0}", openFFBoard.TMC4671Driver.GetEncalign());
+            Console.WriteLine("Motor pole pairs: {0}", openFFBoard.TMC4671Driver.GetPoles());
+            Console.WriteLine("Torque and flux: {0}", openFFBoard.TMC4671Driver.GetActtrq());
             try
             {
-                Console.WriteLine("PWM Limit: {0}", openFFBoard.TMC.GetPwmlim());
+                Console.WriteLine("PWM Limit: {0}", openFFBoard.TMC4671Driver.GetPwmlim());
             }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("PWM Limit: Board is not in debug mode");
             }
-            Console.WriteLine("Torque P: {0}", openFFBoard.TMC.GetTorquep());
-            Console.WriteLine("Torque I: {0}", openFFBoard.TMC.GetTorquei());
-            Console.WriteLine("Flux P: {0}", openFFBoard.TMC.GetFluxp());
-            Console.WriteLine("Flux I: {0}", openFFBoard.TMC.GetFluxi());
-            Console.WriteLine("Velocity P: {0}", openFFBoard.TMC.GetVelocityp());
-            Console.WriteLine("Velocity I: {0}", openFFBoard.TMC.GetVelocityi());
-            Console.WriteLine("Pos P: {0}", openFFBoard.TMC.GetPosp());
-            Console.WriteLine("Pos I: {0}", openFFBoard.TMC.GetPosi());
-            Console.WriteLine("TMC Type: {0}", openFFBoard.TMC.GetTmctype());
-            Console.WriteLine("PID precision: {0}", openFFBoard.TMC.GetPidprec());
+            Console.WriteLine("Torque P: {0}", openFFBoard.TMC4671Driver.GetTorquep());
+            Console.WriteLine("Torque I: {0}", openFFBoard.TMC4671Driver.GetTorquei());
+            Console.WriteLine("Flux P: {0}", openFFBoard.TMC4671Driver.GetFluxp());
+            Console.WriteLine("Flux I: {0}", openFFBoard.TMC4671Driver.GetFluxi());
+            Console.WriteLine("Velocity P: {0}", openFFBoard.TMC4671Driver.GetVelocityp());
+            Console.WriteLine("Velocity I: {0}", openFFBoard.TMC4671Driver.GetVelocityi());
+            Console.WriteLine("Pos P: {0}", openFFBoard.TMC4671Driver.GetPosp());
+            Console.WriteLine("Pos I: {0}", openFFBoard.TMC4671Driver.GetPosi());
+            Console.WriteLine("TMC Type: {0}", openFFBoard.TMC4671Driver.GetTmctype());
+            Console.WriteLine("PID precision: {0}", openFFBoard.TMC4671Driver.GetPidprec());
             try
             {
-                Console.WriteLine("PhiE Source: {0}", openFFBoard.TMC.GetPhiesrc());
+                Console.WriteLine("PhiE Source: {0}", openFFBoard.TMC4671Driver.GetPhiesrc());
             }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("PhiE Source: Board is not in debug mode");
             }
-            Console.WriteLine("Offset flux scale: {0}", openFFBoard.TMC.GetFluxoffset());
-            Console.WriteLine("Sequential PI: {0}", openFFBoard.TMC.GetSeqpi());
-            Console.WriteLine("Counts per A: {0}", openFFBoard.TMC.GetIscale());
+            Console.WriteLine("Offset flux scale: {0}", openFFBoard.TMC4671Driver.GetFluxoffset());
+            Console.WriteLine("Sequential PI: {0}", openFFBoard.TMC4671Driver.GetSeqpi());
+            Console.WriteLine("Counts per A: {0}", openFFBoard.TMC4671Driver.GetIscale());
             try
             {
-                Console.WriteLine("Encoder Direction: {0}", openFFBoard.TMC.GetEncdir());
+                Console.WriteLine("Encoder Direction: {0}", openFFBoard.TMC4671Driver.GetEncdir());
             }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("Encoder Direction: Board is not in debug mode");
             }
-            Console.WriteLine("Encoder polarity: {0}", openFFBoard.TMC.GetAbnpol());
-            Console.WriteLine("TMC Temperature: {0}", openFFBoard.TMC.GetTemp());
+            Console.WriteLine("Encoder polarity: {0}", openFFBoard.TMC4671Driver.GetAbnpol());
+            Console.WriteLine("TMC Temperature: {0}", openFFBoard.TMC4671Driver.GetTemp());
             try
             {
-                Console.WriteLine("TMC Register: {0}", openFFBoard.TMC.GetReg(0));
+                Console.WriteLine("TMC Register: {0}", openFFBoard.TMC4671Driver.GetReg(0));
             }
             catch (InvalidOperationException)
             {
                 Console.WriteLine("TMC Register: Board is not in debug mode");
             }
-            //Console.WriteLine("Space-vector PWM: {0}", openFFBoard.TMC.GetSvpwm());
-            //Console.WriteLine("Auto home: {0}", openFFBoard.TMC.GetAutohome());
-            //Console.WriteLine("ABN Index: {0}", openFFBoard.TMC.GetAbnindex());
-            Console.WriteLine("Perform Calibration: {0}", openFFBoard.TMC.GetCalibrate());
-            Console.WriteLine("Calibrated: {0}", openFFBoard.TMC.GetCalibrated());
-            Console.WriteLine("State: {0}", openFFBoard.TMC.GetState());
-            Console.WriteLine("Combine encoder: {0}", openFFBoard.TMC.GetCombineencoder());
-            Console.WriteLine("Invert forces: {0}", openFFBoard.TMC.GetInvertforce());
-            Console.WriteLine("VM (mV): {0}", openFFBoard.TMC.GetVm());
+            //Console.WriteLine("Space-vector PWM: {0}", openFFBoard.TMC4671Driver.GetSvpwm());
+            //Console.WriteLine("Auto home: {0}", openFFBoard.TMC4671Driver.GetAutohome());
+            //Console.WriteLine("ABN Index: {0}", openFFBoard.TMC4671Driver.GetAbnindex());
+            Console.WriteLine("Perform Calibration: {0}", openFFBoard.TMC4671Driver.GetCalibrate());
+            Console.WriteLine("Calibrated: {0}", openFFBoard.TMC4671Driver.GetCalibrated());
+            Console.WriteLine("State: {0}", openFFBoard.TMC4671Driver.GetState());
+            Console.WriteLine("Combine encoder: {0}", openFFBoard.TMC4671Driver.GetCombineencoder());
+            Console.WriteLine("Invert forces: {0}", openFFBoard.TMC4671Driver.GetInvertforce());
+            Console.WriteLine("VM (mV): {0}", openFFBoard.TMC4671Driver.GetVm());
             #endregion
 
             Console.ReadKey();

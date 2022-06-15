@@ -1,0 +1,9 @@
+mtenc,0x62,MT6825 SPI3
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+cs,0x0,CS pin, R W,byte
+pos,0x1,Position, R W,long
+errors,0x2,Parity error count, R,uint

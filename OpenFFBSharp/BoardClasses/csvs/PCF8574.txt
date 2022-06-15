@@ -1,0 +1,9 @@
+pcfbtn,0x24,I2C PCF8574: btnnum/8 devices required. Addresses starting at 0x20.
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+btnnum,0x0,Amount of buttons, R W,byte
+invert,0x1,Invert buttons, R W,bool
+speed,0x2,400kb/s mode, R W,bool

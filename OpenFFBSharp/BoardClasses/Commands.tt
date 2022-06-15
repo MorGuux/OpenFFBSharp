@@ -148,7 +148,8 @@ public class BoardResponse
             Set = 2,
             SetAddress = 4,
             Info = 8,
-            Debug = 16
+            Debug = 16,
+			String = 32
         }
     }
 
@@ -258,6 +259,8 @@ public class BoardResponse
 						return BoardClass.CmdTypes.SetAddress;
 					case "D":
 						return BoardClass.CmdTypes.Debug;
+					case "(STR)":
+						return BoardClass.CmdTypes.String;
 					default:
 						return BoardClass.CmdTypes.Get;
 				}

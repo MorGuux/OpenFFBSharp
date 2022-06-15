@@ -1,0 +1,18 @@
+vesc,0x87,VESC 1: VESC CAN interface
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+offbcanid,0x0,CAN id of OpenFFBoard Axis, R W,uint
+vesccanid,0x1,CAN id of VESC, R W,uint
+canspd,0x2,CAN baud (3=250k 4=500k 5=1M), R W,byte
+errorflags,0x3,VESC error state, R,string
+vescstate,0x4,VESC state, R,string
+voltage,0x5,VESC supply voltage (mV), R,uint
+encrate,0x6,Encoder update rate, R,uint
+pos,0x7,VESC position, R,long
+torque,0x8,Current VESC torque, R,long
+forceposread,0x9,Force a position update, R,bool
+useencoder,0xA,Enable VESC encoder, R W,bool
+offset,0xB,Get or set encoder offset, R W,long

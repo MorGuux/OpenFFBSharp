@@ -1,13 +1,13 @@
-fx.0,0xA02,Effects: Controls internal FFB effects
+fx,0xA02,Effects: Controls internal FFB effects
 id,0x80000001,ID of class, R,long
-name,0x80000002,name of class, R,string
-help,0x80000003,Prints help for commands, R I,string
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
 cmduid,0x80000005,Command handler index, R,long
 instance,0x80000004,Command handler instance number, R,long
-filterCfFreq,0x0,Constant force filter frequency, R W,ushort
+filterCfFreq,0x0,Constant force filter frequency, R W,uint
 filterCfQ,0x1,Constant force filter Q-factor, R W,byte
 spring,0x3,Spring gain, R W I,byte
 friction,0x4,Friction gain, R W I,byte
 damper,0x5,Damper gain, R W I,byte
 inertia,0x6,Inertia gain, R W I,byte
-effects,0x2,List effects. set 0 to reset, R W,string
+effects,0x2,List effects. set 0 to reset, R W (STR),string

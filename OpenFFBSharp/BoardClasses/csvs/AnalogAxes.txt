@@ -1,0 +1,10 @@
+apin,0x41,AIN-Pins: Analog pins source
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+mask,0x0,Enabled pins, R W,byte
+autocal,0x1,Autoranging, R W,bool
+pins,0x2,Available pins, R W,byte
+values,0x3,Analog values, R,string

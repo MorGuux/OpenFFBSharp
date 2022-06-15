@@ -1,15 +1,15 @@
 main.0,0x1,FFB Wheel (1 Axis): Force feedback HID game controller
 id,0x80000001,ID of class, R,long
-name,0x80000002,name of class, R,string
-help,0x80000003,Prints help for commands, R I,string
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
 cmduid,0x80000005,Command handler index, R,long
 instance,0x80000004,Command handler instance number, R,long
 ffbactive,0x0,FFB status, R,bool
-btntypes,0x2,Enabled button sources, R,string
-addbtn,0x4,Enable button source, R,string
-lsbtn,0x3,Get available button sources, R,string
-aintypes,0x5,Enabled analog sources, R,string
-lsain,0x6,Get available analog sources, R,string
-addain,0x7,Enable analog source, R,string
-hidrate,0x8,Get estimated effect update speed, R,ushort
-hidsendspd,0x9,Change HID gamepad update rate, R W,ushort
+btntypes,0x2,Enabled button sources, R W,byte
+addbtn,0x4,Enable button source, W,byte
+lsbtn,0x3,Get available button sources, R (STR),string
+aintypes,0x5,Enabled analog sources, R W,byte
+lsain,0x6,Get available analog sources, R (STR),string
+addain,0x7,Enable analog source, W,byte
+hidrate,0x8,Get estimated effect update speed, R,uint
+hidsendspd,0x9,Change HID gamepad update rate, R W I,uint

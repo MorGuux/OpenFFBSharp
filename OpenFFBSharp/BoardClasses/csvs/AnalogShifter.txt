@@ -1,0 +1,17 @@
+shifter,0x23,Shifter Analog: Analog 6+1 gear shifter button source
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+mode,0x0,Shifter mode, R W I,byte
+x12,0x1,X-threshold for 1&2 gears, R W,uint
+x56,0x2,X-threshold for 5&6 gears, R W,uint
+y135,0x3,Y-threshold for 1&3&5 gears, R W,uint
+y246,0x4,Y-threshold for 2&4&6 gears, R W,uint
+revbtn,0x5,Pin for R signal, R W,byte
+cspin,0x6,CS pin for SPI modes, R W,byte
+xchan,0x7,X signal analog pin, R W,byte
+ychan,0x8,Y signal analog pin, R W,byte
+vals,0x9,Analog values, R,string
+gear,0xA,Decoded gear, R,string

@@ -1,4 +1,4 @@
-tmc.0,0x81,TMC4671: TMC4671 interface
+tmc,0x81,TMC4671: TMC4671 interface
 id,0x80000001,ID of class, R,long
 name,0x80000002,name of class, R,string
 help,0x80000003,Prints help for commands, R I,string
