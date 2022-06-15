@@ -1,6 +1,5 @@
 ﻿using OpenFFBoard;
 using System;
-using System.IO;
 
 namespace OpenFFBoard
 {
@@ -8,6 +7,516 @@ namespace OpenFFBoard
 	public static class Commands
 	{
 
+		public class AnalogAxes : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x41;
+			public override string Prefix => "apin";
+
+			internal AnalogAxes(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region mask
+			private readonly BoardCommand<byte> _mask = new BoardCommand<byte>("mask", 0x0, "Enabled pins", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Enabled pins
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMask()
+			{
+				return _mask.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Enabled pins
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMask(byte newMask)
+			{
+				var query = _mask.SetValue(_board, this, newMask);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mask;
+			}
+
+			#endregion
+
+			#region autocal
+			private readonly BoardCommand<bool> _autocal = new BoardCommand<bool>("autocal", 0x1, "Autoranging", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Autoranging
+			/// </summary>
+			/// <returns></returns>
+			public bool GetAutocal()
+			{
+				return _autocal.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Autoranging
+			/// </summary>
+			/// <returns></returns>
+			public bool SetAutocal(bool newAutocal)
+			{
+				var query = _autocal.SetValue(_board, this, newAutocal);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _autocal;
+			}
+
+			#endregion
+
+			#region pins
+			private readonly BoardCommand<byte> _pins = new BoardCommand<byte>("pins", 0x2, "Available pins", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Available pins
+			/// </summary>
+			/// <returns></returns>
+			public byte GetPins()
+			{
+				return _pins.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Available pins
+			/// </summary>
+			/// <returns></returns>
+			public bool SetPins(byte newPins)
+			{
+				var query = _pins.SetValue(_board, this, newPins);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _pins;
+			}
+
+			#endregion
+
+			#region values
+			private readonly BoardCommand<string> _values = new BoardCommand<string>("values", 0x3, "Analog values", CmdTypes.Get);
+
+			/// <summary>
+			/// Analog values
+			/// </summary>
+			/// <returns></returns>
+			public string GetValues()
+			{
+				return _values.GetValue(_board, this);
+			}
+			#endregion
+		}
+		public class AnalogShifter : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x23;
+			public override string Prefix => "shifter";
+
+			internal AnalogShifter(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region mode
+			private readonly BoardCommand<byte> _mode = new BoardCommand<byte>("mode", 0x0, "Shifter mode", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// Shifter mode
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMode()
+			{
+				return _mode.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Shifter mode
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMode(byte newMode)
+			{
+				var query = _mode.SetValue(_board, this, newMode);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mode;
+			}
+
+
+			/// <summary>
+			/// Shifter mode
+			/// </summary>
+			/// <returns></returns>
+			public string GetModeInfo()
+			{
+				return _mode.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region x12
+			private readonly BoardCommand<uint> _x12 = new BoardCommand<uint>("x12", 0x1, "X-threshold for 1&2 gears", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// X-threshold for 1&2 gears
+			/// </summary>
+			/// <returns></returns>
+			public uint GetX12()
+			{
+				return _x12.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// X-threshold for 1&2 gears
+			/// </summary>
+			/// <returns></returns>
+			public bool SetX12(uint newX12)
+			{
+				var query = _x12.SetValue(_board, this, newX12);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _x12;
+			}
+
+			#endregion
+
+			#region x56
+			private readonly BoardCommand<uint> _x56 = new BoardCommand<uint>("x56", 0x2, "X-threshold for 5&6 gears", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// X-threshold for 5&6 gears
+			/// </summary>
+			/// <returns></returns>
+			public uint GetX56()
+			{
+				return _x56.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// X-threshold for 5&6 gears
+			/// </summary>
+			/// <returns></returns>
+			public bool SetX56(uint newX56)
+			{
+				var query = _x56.SetValue(_board, this, newX56);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _x56;
+			}
+
+			#endregion
+
+			#region y135
+			private readonly BoardCommand<uint> _y135 = new BoardCommand<uint>("y135", 0x3, "Y-threshold for 1&3&5 gears", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Y-threshold for 1&3&5 gears
+			/// </summary>
+			/// <returns></returns>
+			public uint GetY135()
+			{
+				return _y135.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Y-threshold for 1&3&5 gears
+			/// </summary>
+			/// <returns></returns>
+			public bool SetY135(uint newY135)
+			{
+				var query = _y135.SetValue(_board, this, newY135);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _y135;
+			}
+
+			#endregion
+
+			#region y246
+			private readonly BoardCommand<uint> _y246 = new BoardCommand<uint>("y246", 0x4, "Y-threshold for 2&4&6 gears", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Y-threshold for 2&4&6 gears
+			/// </summary>
+			/// <returns></returns>
+			public uint GetY246()
+			{
+				return _y246.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Y-threshold for 2&4&6 gears
+			/// </summary>
+			/// <returns></returns>
+			public bool SetY246(uint newY246)
+			{
+				var query = _y246.SetValue(_board, this, newY246);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _y246;
+			}
+
+			#endregion
+
+			#region revbtn
+			private readonly BoardCommand<byte> _revbtn = new BoardCommand<byte>("revbtn", 0x5, "Pin for R signal", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Pin for R signal
+			/// </summary>
+			/// <returns></returns>
+			public byte GetRevbtn()
+			{
+				return _revbtn.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Pin for R signal
+			/// </summary>
+			/// <returns></returns>
+			public bool SetRevbtn(byte newRevbtn)
+			{
+				var query = _revbtn.SetValue(_board, this, newRevbtn);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _revbtn;
+			}
+
+			#endregion
+
+			#region cspin
+			private readonly BoardCommand<byte> _cspin = new BoardCommand<byte>("cspin", 0x6, "CS pin for SPI modes", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CS pin for SPI modes
+			/// </summary>
+			/// <returns></returns>
+			public byte GetCspin()
+			{
+				return _cspin.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CS pin for SPI modes
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCspin(byte newCspin)
+			{
+				var query = _cspin.SetValue(_board, this, newCspin);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _cspin;
+			}
+
+			#endregion
+
+			#region xchan
+			private readonly BoardCommand<byte> _xchan = new BoardCommand<byte>("xchan", 0x7, "X signal analog pin", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// X signal analog pin
+			/// </summary>
+			/// <returns></returns>
+			public byte GetXchan()
+			{
+				return _xchan.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// X signal analog pin
+			/// </summary>
+			/// <returns></returns>
+			public bool SetXchan(byte newXchan)
+			{
+				var query = _xchan.SetValue(_board, this, newXchan);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _xchan;
+			}
+
+			#endregion
+
+			#region ychan
+			private readonly BoardCommand<byte> _ychan = new BoardCommand<byte>("ychan", 0x8, "Y signal analog pin", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Y signal analog pin
+			/// </summary>
+			/// <returns></returns>
+			public byte GetYchan()
+			{
+				return _ychan.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Y signal analog pin
+			/// </summary>
+			/// <returns></returns>
+			public bool SetYchan(byte newYchan)
+			{
+				var query = _ychan.SetValue(_board, this, newYchan);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _ychan;
+			}
+
+			#endregion
+
+			#region vals
+			private readonly BoardCommand<string> _vals = new BoardCommand<string>("vals", 0x9, "Analog values", CmdTypes.Get);
+
+			/// <summary>
+			/// Analog values
+			/// </summary>
+			/// <returns></returns>
+			public string GetVals()
+			{
+				return _vals.GetValue(_board, this);
+			}
+			#endregion
+
+			#region gear
+			private readonly BoardCommand<string> _gear = new BoardCommand<string>("gear", 0xA, "Decoded gear", CmdTypes.Get);
+
+			/// <summary>
+			/// Decoded gear
+			/// </summary>
+			/// <returns></returns>
+			public string GetGear()
+			{
+				return _gear.GetValue(_board, this);
+			}
+			#endregion
+		}
 		public class Axis : BoardClass
 		{
 
@@ -35,7 +544,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region name
-			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get);
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
 
 			/// <summary>
 			/// name of class
@@ -48,7 +557,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region help
-			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info);
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
 
 			/// <summary>
 			/// Prints help for commands
@@ -429,6 +938,643 @@ namespace OpenFFBoard
 			}
 			#endregion
 		}
+		public class CANAnalogAxes : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x42;
+			public override string Prefix => "cananalog";
+
+			internal CANAnalogAxes(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region canid
+			private readonly BoardCommand<uint> _canid = new BoardCommand<uint>("canid", 0x0, "CAN frame ID of first packet. Next packet ID+1", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN frame ID of first packet. Next packet ID+1
+			/// </summary>
+			/// <returns></returns>
+			public uint GetCanid()
+			{
+				return _canid.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN frame ID of first packet. Next packet ID+1
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCanid(uint newCanid)
+			{
+				var query = _canid.SetValue(_board, this, newCanid);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _canid;
+			}
+
+			#endregion
+
+			#region amount
+			private readonly BoardCommand<byte> _amount = new BoardCommand<byte>("amount", 0x1, "Amount of analog axes", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Amount of analog axes
+			/// </summary>
+			/// <returns></returns>
+			public byte GetAmount()
+			{
+				return _amount.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Amount of analog axes
+			/// </summary>
+			/// <returns></returns>
+			public bool SetAmount(byte newAmount)
+			{
+				var query = _amount.SetValue(_board, this, newAmount);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _amount;
+			}
+
+			#endregion
+
+			#region maxamount
+			private readonly BoardCommand<byte> _maxamount = new BoardCommand<byte>("maxamount", 0x2, "Maxmimum amount of analog axes", CmdTypes.Get);
+
+			/// <summary>
+			/// Maxmimum amount of analog axes
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMaxamount()
+			{
+				return _maxamount.GetValue(_board, this);
+			}
+			#endregion
+		}
+		public class CANButtons : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x25;
+			public override string Prefix => "canbtn";
+
+			internal CANButtons(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region btnnum
+			private readonly BoardCommand<byte> _btnnum = new BoardCommand<byte>("btnnum", 0x0, "Amount of buttons", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Amount of buttons
+			/// </summary>
+			/// <returns></returns>
+			public byte GetBtnnum()
+			{
+				return _btnnum.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Amount of buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtnnum(byte newBtnnum)
+			{
+				var query = _btnnum.SetValue(_board, this, newBtnnum);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btnnum;
+			}
+
+			#endregion
+
+			#region invert
+			private readonly BoardCommand<bool> _invert = new BoardCommand<bool>("invert", 0x1, "Invert buttons", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Invert buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool GetInvert()
+			{
+				return _invert.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Invert buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool SetInvert(bool newInvert)
+			{
+				var query = _invert.SetValue(_board, this, newInvert);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _invert;
+			}
+
+			#endregion
+
+			#region canid
+			private readonly BoardCommand<uint> _canid = new BoardCommand<uint>("canid", 0x2, "CAN frame ID", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN frame ID
+			/// </summary>
+			/// <returns></returns>
+			public uint GetCanid()
+			{
+				return _canid.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN frame ID
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCanid(uint newCanid)
+			{
+				var query = _canid.SetValue(_board, this, newCanid);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _canid;
+			}
+
+			#endregion
+		}
+		public class CANPort : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0xC01;
+			public override string Prefix => "can";
+
+			internal CANPort(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region speed
+			private readonly BoardCommand<byte> _speed = new BoardCommand<byte>("speed", 0x0, "CAN speed preset (0:50k;1:100k;2:125k;3:250k;4:500k;5:1M)", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// CAN speed preset (0:50k;1:100k;2:125k;3:250k;4:500k;5:1M)
+			/// </summary>
+			/// <returns></returns>
+			public byte GetSpeed()
+			{
+				return _speed.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN speed preset (0:50k;1:100k;2:125k;3:250k;4:500k;5:1M)
+			/// </summary>
+			/// <returns></returns>
+			public bool SetSpeed(byte newSpeed)
+			{
+				var query = _speed.SetValue(_board, this, newSpeed);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _speed;
+			}
+
+
+			/// <summary>
+			/// CAN speed preset (0:50k;1:100k;2:125k;3:250k;4:500k;5:1M)
+			/// </summary>
+			/// <returns></returns>
+			public string GetSpeedInfo()
+			{
+				return _speed.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region send
+			private readonly BoardCommand<string> _send = new BoardCommand<string>("send", 0x1, "Send CAN frame. Adr&Value required", CmdTypes.SetAddress);
+
+			/// <summary>
+			/// Send CAN frame. Adr&Value required
+			/// </summary>
+			/// <returns></returns>
+			public bool SetSend(string newSend, ulong address)
+			{
+				var query = _send.SetValue(_board, this, newSend, address);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _send;
+			}
+			#endregion
+
+			#region len
+			private readonly BoardCommand<byte> _len = new BoardCommand<byte>("len", 0x2, "Set length of next frames", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Set length of next frames
+			/// </summary>
+			/// <returns></returns>
+			public byte GetLen()
+			{
+				return _len.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Set length of next frames
+			/// </summary>
+			/// <returns></returns>
+			public bool SetLen(byte newLen)
+			{
+				var query = _len.SetValue(_board, this, newLen);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _len;
+			}
+
+			#endregion
+		}
+		public class DigitalButtons : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x21;
+			public override string Prefix => "dpin";
+
+			internal DigitalButtons(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region mask
+			private readonly BoardCommand<byte> _mask = new BoardCommand<byte>("mask", 0x0, "Enabled pins", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Enabled pins
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMask()
+			{
+				return _mask.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Enabled pins
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMask(byte newMask)
+			{
+				var query = _mask.SetValue(_board, this, newMask);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mask;
+			}
+
+			#endregion
+
+			#region polarity
+			private readonly BoardCommand<bool> _polarity = new BoardCommand<bool>("polarity", 0x1, "Pin polarity", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Pin polarity
+			/// </summary>
+			/// <returns></returns>
+			public bool GetPolarity()
+			{
+				return _polarity.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Pin polarity
+			/// </summary>
+			/// <returns></returns>
+			public bool SetPolarity(bool newPolarity)
+			{
+				var query = _polarity.SetValue(_board, this, newPolarity);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _polarity;
+			}
+
+			#endregion
+
+			#region pins
+			private readonly BoardCommand<byte> _pins = new BoardCommand<byte>("pins", 0x2, "Available pins", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Available pins
+			/// </summary>
+			/// <returns></returns>
+			public byte GetPins()
+			{
+				return _pins.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Available pins
+			/// </summary>
+			/// <returns></returns>
+			public bool SetPins(byte newPins)
+			{
+				var query = _pins.SetValue(_board, this, newPins);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _pins;
+			}
+
+			#endregion
+
+			#region values
+			private readonly BoardCommand<byte> _values = new BoardCommand<byte>("values", 0x3, "pin values", CmdTypes.Get);
+
+			/// <summary>
+			/// pin values
+			/// </summary>
+			/// <returns></returns>
+			public byte GetValues()
+			{
+				return _values.GetValue(_board, this);
+			}
+			#endregion
+		}
 		public class FX : BoardClass
 		{
 
@@ -456,7 +1602,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region name
-			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get);
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
 
 			/// <summary>
 			/// name of class
@@ -469,7 +1615,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region help
-			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info);
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
 
 			/// <summary>
 			/// Prints help for commands
@@ -697,7 +1843,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region effects
-			private readonly BoardCommand<string> _effects = new BoardCommand<string>("effects", 0x2, "List effects. set 0 to reset", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<string> _effects = new BoardCommand<string>("effects", 0x2, "List effects. set 0 to reset", CmdTypes.Get | CmdTypes.Set | CmdTypes.String);
 
 			/// <summary>
 			/// List effects. set 0 to reset
@@ -720,12 +1866,132 @@ namespace OpenFFBoard
 
 			#endregion
 		}
+		public class I2CPort : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0xC02;
+			public override string Prefix => "i2c";
+
+			internal I2CPort(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region speed
+			private readonly BoardCommand<byte> _speed = new BoardCommand<byte>("speed", 0x0, "I2C speed preset (0:100k;1:400k)", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// I2C speed preset (0:100k;1:400k)
+			/// </summary>
+			/// <returns></returns>
+			public byte GetSpeed()
+			{
+				return _speed.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// I2C speed preset (0:100k;1:400k)
+			/// </summary>
+			/// <returns></returns>
+			public bool SetSpeed(byte newSpeed)
+			{
+				var query = _speed.SetValue(_board, this, newSpeed);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _speed;
+			}
+
+
+			/// <summary>
+			/// I2C speed preset (0:100k;1:400k)
+			/// </summary>
+			/// <returns></returns>
+			public string GetSpeedInfo()
+			{
+				return _speed.GetInfo(_board, this);
+			}
+			#endregion
+		}
 		public class Main : BoardClass
 		{
 
 			private readonly Board _board;
 			public override ushort ClassId => 0x1;
-			public override string Prefix => "main";
+			public override string Prefix => "main.0";
 
 			internal Main(Board board)
 			{
@@ -747,7 +2013,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region name
-			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get);
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
 
 			/// <summary>
 			/// name of class
@@ -760,7 +2026,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region help
-			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info);
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
 
 			/// <summary>
 			/// Prints help for commands
@@ -821,33 +2087,46 @@ namespace OpenFFBoard
 			#endregion
 
 			#region btntypes
-			private readonly BoardCommand<string> _btntypes = new BoardCommand<string>("btntypes", 0x2, "Enabled button sources", CmdTypes.Get);
+			private readonly BoardCommand<byte> _btntypes = new BoardCommand<byte>("btntypes", 0x2, "Enabled button sources", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Enabled button sources
 			/// </summary>
 			/// <returns></returns>
-			public string GetBtntypes()
+			public byte GetBtntypes()
 			{
 				return _btntypes.GetValue(_board, this);
 			}
+
+			/// <summary>
+			/// Enabled button sources
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtntypes(byte newBtntypes)
+			{
+				var query = _btntypes.SetValue(_board, this, newBtntypes);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btntypes;
+			}
+
 			#endregion
 
 			#region addbtn
-			private readonly BoardCommand<string> _addbtn = new BoardCommand<string>("addbtn", 0x4, "Enable button source", CmdTypes.Get);
+			private readonly BoardCommand<byte> _addbtn = new BoardCommand<byte>("addbtn", 0x4, "Enable button source", CmdTypes.Set);
 
 			/// <summary>
 			/// Enable button source
 			/// </summary>
 			/// <returns></returns>
-			public string GetAddbtn()
+			public bool SetAddbtn(byte newAddbtn)
 			{
-				return _addbtn.GetValue(_board, this);
+				var query = _addbtn.SetValue(_board, this, newAddbtn);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _addbtn;
 			}
+
 			#endregion
 
 			#region lsbtn
-			private readonly BoardCommand<string> _lsbtn = new BoardCommand<string>("lsbtn", 0x3, "Get available button sources", CmdTypes.Get);
+			private readonly BoardCommand<string> _lsbtn = new BoardCommand<string>("lsbtn", 0x3, "Get available button sources", CmdTypes.Get | CmdTypes.String);
 
 			/// <summary>
 			/// Get available button sources
@@ -860,20 +2139,31 @@ namespace OpenFFBoard
 			#endregion
 
 			#region aintypes
-			private readonly BoardCommand<string> _aintypes = new BoardCommand<string>("aintypes", 0x5, "Enabled analog sources", CmdTypes.Get);
+			private readonly BoardCommand<byte> _aintypes = new BoardCommand<byte>("aintypes", 0x5, "Enabled analog sources", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Enabled analog sources
 			/// </summary>
 			/// <returns></returns>
-			public string GetAintypes()
+			public byte GetAintypes()
 			{
 				return _aintypes.GetValue(_board, this);
 			}
+
+			/// <summary>
+			/// Enabled analog sources
+			/// </summary>
+			/// <returns></returns>
+			public bool SetAintypes(byte newAintypes)
+			{
+				var query = _aintypes.SetValue(_board, this, newAintypes);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _aintypes;
+			}
+
 			#endregion
 
 			#region lsain
-			private readonly BoardCommand<string> _lsain = new BoardCommand<string>("lsain", 0x6, "Get available analog sources", CmdTypes.Get);
+			private readonly BoardCommand<string> _lsain = new BoardCommand<string>("lsain", 0x6, "Get available analog sources", CmdTypes.Get | CmdTypes.String);
 
 			/// <summary>
 			/// Get available analog sources
@@ -886,16 +2176,18 @@ namespace OpenFFBoard
 			#endregion
 
 			#region addain
-			private readonly BoardCommand<string> _addain = new BoardCommand<string>("addain", 0x7, "Enable analog source", CmdTypes.Get);
+			private readonly BoardCommand<byte> _addain = new BoardCommand<byte>("addain", 0x7, "Enable analog source", CmdTypes.Set);
 
 			/// <summary>
 			/// Enable analog source
 			/// </summary>
 			/// <returns></returns>
-			public string GetAddain()
+			public bool SetAddain(byte newAddain)
 			{
-				return _addain.GetValue(_board, this);
+				var query = _addain.SetValue(_board, this, newAddain);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _addain;
 			}
+
 			#endregion
 
 			#region hidrate
@@ -912,7 +2204,7 @@ namespace OpenFFBoard
 			#endregion
 
 			#region hidsendspd
-			private readonly BoardCommand<ushort> _hidsendspd = new BoardCommand<ushort>("hidsendspd", 0x9, "Change HID gamepad update rate", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<ushort> _hidsendspd = new BoardCommand<ushort>("hidsendspd", 0x9, "Change HID gamepad update rate", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
 
 			/// <summary>
 			/// Change HID gamepad update rate
@@ -933,6 +2225,917 @@ namespace OpenFFBoard
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _hidsendspd;
 			}
 
+
+			/// <summary>
+			/// Change HID gamepad update rate
+			/// </summary>
+			/// <returns></returns>
+			public string GetHidsendspdInfo()
+			{
+				return _hidsendspd.GetInfo(_board, this);
+			}
+			#endregion
+		}
+		public class MTSPI : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x62;
+			public override string Prefix => "mtenc";
+
+			internal MTSPI(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region cs
+			private readonly BoardCommand<byte> _cs = new BoardCommand<byte>("cs", 0x0, "CS pin", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CS pin
+			/// </summary>
+			/// <returns></returns>
+			public byte GetCs()
+			{
+				return _cs.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CS pin
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCs(byte newCs)
+			{
+				var query = _cs.SetValue(_board, this, newCs);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _cs;
+			}
+
+			#endregion
+
+			#region pos
+			private readonly BoardCommand<long> _pos = new BoardCommand<long>("pos", 0x1, "Position", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Position
+			/// </summary>
+			/// <returns></returns>
+			public long GetPos()
+			{
+				return _pos.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Position
+			/// </summary>
+			/// <returns></returns>
+			public bool SetPos(long newPos)
+			{
+				var query = _pos.SetValue(_board, this, newPos);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _pos;
+			}
+
+			#endregion
+
+			#region errors
+			private readonly BoardCommand<uint> _errors = new BoardCommand<uint>("errors", 0x2, "Parity error count", CmdTypes.Get);
+
+			/// <summary>
+			/// Parity error count
+			/// </summary>
+			/// <returns></returns>
+			public uint GetErrors()
+			{
+				return _errors.GetValue(_board, this);
+			}
+			#endregion
+		}
+		public class ODriveDriver : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x85;
+			public override string Prefix => "odrv";
+
+			internal ODriveDriver(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region canid
+			private readonly BoardCommand<uint> _canid = new BoardCommand<uint>("canid", 0x0, "CAN id of ODrive", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN id of ODrive
+			/// </summary>
+			/// <returns></returns>
+			public uint GetCanid()
+			{
+				return _canid.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN id of ODrive
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCanid(uint newCanid)
+			{
+				var query = _canid.SetValue(_board, this, newCanid);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _canid;
+			}
+
+			#endregion
+
+			#region canspd
+			private readonly BoardCommand<byte> _canspd = new BoardCommand<byte>("canspd", 0x1, "CAN baudrate", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN baudrate
+			/// </summary>
+			/// <returns></returns>
+			public byte GetCanspd()
+			{
+				return _canspd.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN baudrate
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCanspd(byte newCanspd)
+			{
+				var query = _canspd.SetValue(_board, this, newCanspd);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _canspd;
+			}
+
+			#endregion
+
+			#region errors
+			private readonly BoardCommand<string> _errors = new BoardCommand<string>("errors", 0x2, "ODrive error flags", CmdTypes.Get);
+
+			/// <summary>
+			/// ODrive error flags
+			/// </summary>
+			/// <returns></returns>
+			public string GetErrors()
+			{
+				return _errors.GetValue(_board, this);
+			}
+			#endregion
+
+			#region state
+			private readonly BoardCommand<string> _state = new BoardCommand<string>("state", 0x3, "ODrive state", CmdTypes.Get);
+
+			/// <summary>
+			/// ODrive state
+			/// </summary>
+			/// <returns></returns>
+			public string GetState()
+			{
+				return _state.GetValue(_board, this);
+			}
+			#endregion
+
+			#region maxtorque
+			private readonly BoardCommand<uint> _maxtorque = new BoardCommand<uint>("maxtorque", 0x4, "Max torque to send for scaling", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Max torque to send for scaling
+			/// </summary>
+			/// <returns></returns>
+			public uint GetMaxtorque()
+			{
+				return _maxtorque.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Max torque to send for scaling
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMaxtorque(uint newMaxtorque)
+			{
+				var query = _maxtorque.SetValue(_board, this, newMaxtorque);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _maxtorque;
+			}
+
+			#endregion
+
+			#region vbus
+			private readonly BoardCommand<uint> _vbus = new BoardCommand<uint>("vbus", 0x5, "ODrive Vbus", CmdTypes.Get);
+
+			/// <summary>
+			/// ODrive Vbus
+			/// </summary>
+			/// <returns></returns>
+			public uint GetVbus()
+			{
+				return _vbus.GetValue(_board, this);
+			}
+			#endregion
+
+			#region anticogging
+			private readonly BoardCommand<bool> _anticogging = new BoardCommand<bool>("anticogging", 0x6, "Set 1 to start anticogging calibration", CmdTypes.Set);
+
+			/// <summary>
+			/// Set 1 to start anticogging calibration
+			/// </summary>
+			/// <returns></returns>
+			public bool SetAnticogging(bool newAnticogging)
+			{
+				var query = _anticogging.SetValue(_board, this, newAnticogging);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _anticogging;
+			}
+
+			#endregion
+
+			#region connected
+			private readonly BoardCommand<bool> _connected = new BoardCommand<bool>("connected", 0x7, "ODrive connection state", CmdTypes.Get);
+
+			/// <summary>
+			/// ODrive connection state
+			/// </summary>
+			/// <returns></returns>
+			public bool GetConnected()
+			{
+				return _connected.GetValue(_board, this);
+			}
+			#endregion
+		}
+		public class PCF8574 : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x24;
+			public override string Prefix => "pcfbtn";
+
+			internal PCF8574(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region btnnum
+			private readonly BoardCommand<byte> _btnnum = new BoardCommand<byte>("btnnum", 0x0, "Amount of buttons", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Amount of buttons
+			/// </summary>
+			/// <returns></returns>
+			public byte GetBtnnum()
+			{
+				return _btnnum.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Amount of buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtnnum(byte newBtnnum)
+			{
+				var query = _btnnum.SetValue(_board, this, newBtnnum);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btnnum;
+			}
+
+			#endregion
+
+			#region invert
+			private readonly BoardCommand<bool> _invert = new BoardCommand<bool>("invert", 0x1, "Invert buttons", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Invert buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool GetInvert()
+			{
+				return _invert.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Invert buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool SetInvert(bool newInvert)
+			{
+				var query = _invert.SetValue(_board, this, newInvert);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _invert;
+			}
+
+			#endregion
+
+			#region speed
+			private readonly BoardCommand<bool> _speed = new BoardCommand<bool>("speed", 0x2, "400kb/s mode", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// 400kb/s mode
+			/// </summary>
+			/// <returns></returns>
+			public bool GetSpeed()
+			{
+				return _speed.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// 400kb/s mode
+			/// </summary>
+			/// <returns></returns>
+			public bool SetSpeed(bool newSpeed)
+			{
+				var query = _speed.SetValue(_board, this, newSpeed);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _speed;
+			}
+
+			#endregion
+		}
+		public class PWMDriver : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x84;
+			public override string Prefix => "pwmdrv";
+
+			internal PWMDriver(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region freq
+			private readonly BoardCommand<byte> _freq = new BoardCommand<byte>("freq", 0x1, "PWM period selection", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// PWM period selection
+			/// </summary>
+			/// <returns></returns>
+			public byte GetFreq()
+			{
+				return _freq.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// PWM period selection
+			/// </summary>
+			/// <returns></returns>
+			public bool SetFreq(byte newFreq)
+			{
+				var query = _freq.SetValue(_board, this, newFreq);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _freq;
+			}
+
+
+			/// <summary>
+			/// PWM period selection
+			/// </summary>
+			/// <returns></returns>
+			public string GetFreqInfo()
+			{
+				return _freq.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region mode
+			private readonly BoardCommand<byte> _mode = new BoardCommand<byte>("mode", 0x0, "PWM mode", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// PWM mode
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMode()
+			{
+				return _mode.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// PWM mode
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMode(byte newMode)
+			{
+				var query = _mode.SetValue(_board, this, newMode);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mode;
+			}
+
+
+			/// <summary>
+			/// PWM mode
+			/// </summary>
+			/// <returns></returns>
+			public string GetModeInfo()
+			{
+				return _mode.GetInfo(_board, this);
+			}
+			#endregion
+		}
+		public class SPIButtons : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x22;
+			public override string Prefix => "spibtn";
+
+			internal SPIButtons(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region mode
+			private readonly BoardCommand<byte> _mode = new BoardCommand<byte>("mode", 0x0, "SPI mode", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+
+			/// <summary>
+			/// SPI mode
+			/// </summary>
+			/// <returns></returns>
+			public byte GetMode()
+			{
+				return _mode.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// SPI mode
+			/// </summary>
+			/// <returns></returns>
+			public bool SetMode(byte newMode)
+			{
+				var query = _mode.SetValue(_board, this, newMode);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _mode;
+			}
+
+
+			/// <summary>
+			/// SPI mode
+			/// </summary>
+			/// <returns></returns>
+			public string GetModeInfo()
+			{
+				return _mode.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region btncut
+			private readonly BoardCommand<byte> _btncut = new BoardCommand<byte>("btncut", 0x1, "Cut buttons right", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Cut buttons right
+			/// </summary>
+			/// <returns></returns>
+			public byte GetBtncut()
+			{
+				return _btncut.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Cut buttons right
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtncut(byte newBtncut)
+			{
+				var query = _btncut.SetValue(_board, this, newBtncut);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btncut;
+			}
+
+			#endregion
+
+			#region btnpol
+			private readonly BoardCommand<bool> _btnpol = new BoardCommand<bool>("btnpol", 0x2, "Invert", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Invert
+			/// </summary>
+			/// <returns></returns>
+			public bool GetBtnpol()
+			{
+				return _btnpol.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Invert
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtnpol(bool newBtnpol)
+			{
+				var query = _btnpol.SetValue(_board, this, newBtnpol);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btnpol;
+			}
+
+			#endregion
+
+			#region btnnum
+			private readonly BoardCommand<byte> _btnnum = new BoardCommand<byte>("btnnum", 0x3, "Number of buttons", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Number of buttons
+			/// </summary>
+			/// <returns></returns>
+			public byte GetBtnnum()
+			{
+				return _btnnum.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Number of buttons
+			/// </summary>
+			/// <returns></returns>
+			public bool SetBtnnum(byte newBtnnum)
+			{
+				var query = _btnnum.SetValue(_board, this, newBtnnum);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _btnnum;
+			}
+
+			#endregion
+
+			#region cs
+			private readonly BoardCommand<byte> _cs = new BoardCommand<byte>("cs", 0x4, "SPI CS pin", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// SPI CS pin
+			/// </summary>
+			/// <returns></returns>
+			public byte GetCs()
+			{
+				return _cs.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// SPI CS pin
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCs(byte newCs)
+			{
+				var query = _cs.SetValue(_board, this, newCs);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _cs;
+			}
+
 			#endregion
 		}
 		public class System : BoardClass
@@ -949,16 +3152,7 @@ namespace OpenFFBoard
 
 
 			#region help
-			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x0, "Print system help", CmdTypes.Get);
-
-			/// <summary>
-			/// Print system help
-			/// </summary>
-			/// <returns></returns>
-			public string GetHelp()
-			{
-				return _help.GetValue(_board, this);
-			}
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x0, "Print system help", CmdTypes.String);
 			#endregion
 
 			#region save
@@ -1027,26 +3221,26 @@ namespace OpenFFBoard
 			#endregion
 
 			#region vint
-			private readonly BoardCommand<ulong> _vint = new BoardCommand<ulong>("vint", 0xE, "Internal voltage(mV)", CmdTypes.Get);
+			private readonly BoardCommand<uint> _vint = new BoardCommand<uint>("vint", 0xE, "Internal voltage(mV)", CmdTypes.Get);
 
 			/// <summary>
 			/// Internal voltage(mV)
 			/// </summary>
 			/// <returns></returns>
-			public ulong GetVint()
+			public uint GetVint()
 			{
 				return _vint.GetValue(_board, this);
 			}
 			#endregion
 
 			#region vext
-			private readonly BoardCommand<ulong> _vext = new BoardCommand<ulong>("vext", 0xF, "External voltage(mV)", CmdTypes.Get);
+			private readonly BoardCommand<uint> _vext = new BoardCommand<uint>("vext", 0xF, "External voltage(mV)", CmdTypes.Get);
 
 			/// <summary>
 			/// External voltage(mV)
 			/// </summary>
 			/// <returns></returns>
-			public ulong GetVext()
+			public uint GetVext()
 			{
 				return _vext.GetValue(_board, this);
 			}
@@ -1220,14 +3414,14 @@ namespace OpenFFBoard
 			}
 			#endregion
 		}
-		public class TMC : BoardClass
+		public class TMC4671Driver : BoardClass
 		{
 
 			private readonly Board _board;
 			public override ushort ClassId => 0x81;
 			public override string Prefix => "tmc";
 
-			internal TMC(Board board)
+			internal TMC4671Driver(Board board)
 			{
 				_board = board;
 			}
@@ -2076,6 +4270,304 @@ namespace OpenFFBoard
 			}
 			#endregion
 		}
+		public class VESCDriver : BoardClass
+		{
+
+			private readonly Board _board;
+			public override ushort ClassId => 0x87;
+			public override string Prefix => "vesc";
+
+			internal VESCDriver(Board board)
+			{
+				_board = board;
+			}
+
+
+			#region id
+			private readonly BoardCommand<long> _id = new BoardCommand<long>("id", 0x80000001, "ID of class", CmdTypes.Get);
+
+			/// <summary>
+			/// ID of class
+			/// </summary>
+			/// <returns></returns>
+			public long GetId()
+			{
+				return _id.GetValue(_board, this);
+			}
+			#endregion
+
+			#region name
+			private readonly BoardCommand<string> _name = new BoardCommand<string>("name", 0x80000002, "name of class", CmdTypes.Get | CmdTypes.String);
+
+			/// <summary>
+			/// name of class
+			/// </summary>
+			/// <returns></returns>
+			public string GetName()
+			{
+				return _name.GetValue(_board, this);
+			}
+			#endregion
+
+			#region help
+			private readonly BoardCommand<string> _help = new BoardCommand<string>("help", 0x80000003, "Prints help for commands", CmdTypes.Get | CmdTypes.Info | CmdTypes.String);
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelp()
+			{
+				return _help.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Prints help for commands
+			/// </summary>
+			/// <returns></returns>
+			public string GetHelpInfo()
+			{
+				return _help.GetInfo(_board, this);
+			}
+			#endregion
+
+			#region cmduid
+			private readonly BoardCommand<long> _cmduid = new BoardCommand<long>("cmduid", 0x80000005, "Command handler index", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler index
+			/// </summary>
+			/// <returns></returns>
+			public long GetCmduid()
+			{
+				return _cmduid.GetValue(_board, this);
+			}
+			#endregion
+
+			#region instance
+			private readonly BoardCommand<long> _instance = new BoardCommand<long>("instance", 0x80000004, "Command handler instance number", CmdTypes.Get);
+
+			/// <summary>
+			/// Command handler instance number
+			/// </summary>
+			/// <returns></returns>
+			public long GetInstance()
+			{
+				return _instance.GetValue(_board, this);
+			}
+			#endregion
+
+			#region offbcanid
+			private readonly BoardCommand<uint> _offbcanid = new BoardCommand<uint>("offbcanid", 0x0, "CAN id of OpenFFBoard Axis", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN id of OpenFFBoard Axis
+			/// </summary>
+			/// <returns></returns>
+			public uint GetOffbcanid()
+			{
+				return _offbcanid.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN id of OpenFFBoard Axis
+			/// </summary>
+			/// <returns></returns>
+			public bool SetOffbcanid(uint newOffbcanid)
+			{
+				var query = _offbcanid.SetValue(_board, this, newOffbcanid);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _offbcanid;
+			}
+
+			#endregion
+
+			#region vesccanid
+			private readonly BoardCommand<uint> _vesccanid = new BoardCommand<uint>("vesccanid", 0x1, "CAN id of VESC", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN id of VESC
+			/// </summary>
+			/// <returns></returns>
+			public uint GetVesccanid()
+			{
+				return _vesccanid.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN id of VESC
+			/// </summary>
+			/// <returns></returns>
+			public bool SetVesccanid(uint newVesccanid)
+			{
+				var query = _vesccanid.SetValue(_board, this, newVesccanid);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _vesccanid;
+			}
+
+			#endregion
+
+			#region canspd
+			private readonly BoardCommand<byte> _canspd = new BoardCommand<byte>("canspd", 0x2, "CAN baud (3=250k 4=500k 5=1M)", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// CAN baud (3=250k 4=500k 5=1M)
+			/// </summary>
+			/// <returns></returns>
+			public byte GetCanspd()
+			{
+				return _canspd.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// CAN baud (3=250k 4=500k 5=1M)
+			/// </summary>
+			/// <returns></returns>
+			public bool SetCanspd(byte newCanspd)
+			{
+				var query = _canspd.SetValue(_board, this, newCanspd);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _canspd;
+			}
+
+			#endregion
+
+			#region errorflags
+			private readonly BoardCommand<string> _errorflags = new BoardCommand<string>("errorflags", 0x3, "VESC error state", CmdTypes.Get);
+
+			/// <summary>
+			/// VESC error state
+			/// </summary>
+			/// <returns></returns>
+			public string GetErrorflags()
+			{
+				return _errorflags.GetValue(_board, this);
+			}
+			#endregion
+
+			#region vescstate
+			private readonly BoardCommand<string> _vescstate = new BoardCommand<string>("vescstate", 0x4, "VESC state", CmdTypes.Get);
+
+			/// <summary>
+			/// VESC state
+			/// </summary>
+			/// <returns></returns>
+			public string GetVescstate()
+			{
+				return _vescstate.GetValue(_board, this);
+			}
+			#endregion
+
+			#region voltage
+			private readonly BoardCommand<uint> _voltage = new BoardCommand<uint>("voltage", 0x5, "VESC supply voltage (mV)", CmdTypes.Get);
+
+			/// <summary>
+			/// VESC supply voltage (mV)
+			/// </summary>
+			/// <returns></returns>
+			public uint GetVoltage()
+			{
+				return _voltage.GetValue(_board, this);
+			}
+			#endregion
+
+			#region encrate
+			private readonly BoardCommand<uint> _encrate = new BoardCommand<uint>("encrate", 0x6, "Encoder update rate", CmdTypes.Get);
+
+			/// <summary>
+			/// Encoder update rate
+			/// </summary>
+			/// <returns></returns>
+			public uint GetEncrate()
+			{
+				return _encrate.GetValue(_board, this);
+			}
+			#endregion
+
+			#region pos
+			private readonly BoardCommand<long> _pos = new BoardCommand<long>("pos", 0x7, "VESC position", CmdTypes.Get);
+
+			/// <summary>
+			/// VESC position
+			/// </summary>
+			/// <returns></returns>
+			public long GetPos()
+			{
+				return _pos.GetValue(_board, this);
+			}
+			#endregion
+
+			#region torque
+			private readonly BoardCommand<long> _torque = new BoardCommand<long>("torque", 0x8, "Current VESC torque", CmdTypes.Get);
+
+			/// <summary>
+			/// Current VESC torque
+			/// </summary>
+			/// <returns></returns>
+			public long GetTorque()
+			{
+				return _torque.GetValue(_board, this);
+			}
+			#endregion
+
+			#region forceposread
+			private readonly BoardCommand<bool> _forceposread = new BoardCommand<bool>("forceposread", 0x9, "Force a position update", CmdTypes.Get);
+
+			/// <summary>
+			/// Force a position update
+			/// </summary>
+			/// <returns></returns>
+			public bool GetForceposread()
+			{
+				return _forceposread.GetValue(_board, this);
+			}
+			#endregion
+
+			#region useencoder
+			private readonly BoardCommand<bool> _useencoder = new BoardCommand<bool>("useencoder", 0xA, "Enable VESC encoder", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Enable VESC encoder
+			/// </summary>
+			/// <returns></returns>
+			public bool GetUseencoder()
+			{
+				return _useencoder.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Enable VESC encoder
+			/// </summary>
+			/// <returns></returns>
+			public bool SetUseencoder(bool newUseencoder)
+			{
+				var query = _useencoder.SetValue(_board, this, newUseencoder);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _useencoder;
+			}
+
+			#endregion
+
+			#region offset
+			private readonly BoardCommand<long> _offset = new BoardCommand<long>("offset", 0xB, "Get or set encoder offset", CmdTypes.Get | CmdTypes.Set);
+
+			/// <summary>
+			/// Get or set encoder offset
+			/// </summary>
+			/// <returns></returns>
+			public long GetOffset()
+			{
+				return _offset.GetValue(_board, this);
+			}
+
+			/// <summary>
+			/// Get or set encoder offset
+			/// </summary>
+			/// <returns></returns>
+			public bool SetOffset(long newOffset)
+			{
+				var query = _offset.SetValue(_board, this, newOffset);
+				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _offset;
+			}
+
+			#endregion
+		}
 
 		public class BoardResponse
 		{
@@ -2113,7 +4605,8 @@ namespace OpenFFBoard
 			Set = 2,
 			SetAddress = 4,
 			Info = 8,
-			Debug = 16
+			Debug = 16,
+			String = 32
 		}
 	}
 
@@ -2138,16 +4631,13 @@ namespace OpenFFBoard
 			if (Types.HasFlag(BoardClass.CmdTypes.Get))
 			{
 				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, null);
-                if (response == null)
-                    throw new IOException("Could not get a response from the OpenFFBoard.");
-
 				if (response.Type == Commands.CmdType.Error || response.Type == Commands.CmdType.NotFound)
 					return default;
-				if (Convert.ToString(response.Data) == "OK")
+				if ((string)response.Data == "OK")
 					return (T)Convert.ChangeType(true, typeof(T));
 
 				if (typeof(T) == typeof(bool))
-					return (T)Convert.ChangeType(Convert.ToString(response.Data) == "1", typeof(T));
+					return (T)Convert.ChangeType((string)response.Data == "1", typeof(T));
 
 				return (T)Convert.ChangeType(response.Data, typeof(T));
 			}

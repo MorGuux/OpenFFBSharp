@@ -1,0 +1,11 @@
+spibtn,0x22,SPI Buttons 1: SPI 2 Button
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+mode,0x0,SPI mode, R W I,byte
+btncut,0x1,Cut buttons right, R W,byte
+btnpol,0x2,Invert, R W,bool
+btnnum,0x3,Number of buttons, R W,byte
+cs,0x4,SPI CS pin, R W,byte

@@ -1,0 +1,9 @@
+can,0xC01,Can port
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+speed,0x0,CAN speed preset (0:50k;1:100k;2:125k;3:250k;4:500k;5:1M), R W I,byte
+send,0x1,Send CAN frame. Adr&Value required, WA,string
+len,0x2,Set length of next frames, R W,byte

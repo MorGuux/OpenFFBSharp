@@ -1,7 +1,7 @@
-axis.0,0xA01,Axis: FFB axis
+axis,0xA01,Axis: FFB axis
 id,0x80000001,ID of class, R,long
-name,0x80000002,name of class, R,string
-help,0x80000003,Prints help for commands, R I,string
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
 cmduid,0x80000005,Command handler index, R,long
 instance,0x80000004,Command handler instance number, R,long
 power,0x0,Overall force strength, R W,ushort

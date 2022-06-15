@@ -1,0 +1,14 @@
+odrv,0x85,ODrive (M0): ODrive motor driver with CAN
+id,0x80000001,ID of class, R,long
+name,0x80000002,name of class, R (STR),string
+help,0x80000003,Prints help for commands, R I (STR),string
+cmduid,0x80000005,Command handler index, R,long
+instance,0x80000004,Command handler instance number, R,long
+canid,0x0,CAN id of ODrive, R W,uint
+canspd,0x1,CAN baudrate, R W,byte
+errors,0x2,ODrive error flags, R,string
+state,0x3,ODrive state, R,string
+maxtorque,0x4,Max torque to send for scaling, R W,uint
+vbus,0x5,ODrive Vbus, R,uint
+anticogging,0x6,Set 1 to start anticogging calibration, W,bool
+connected,0x7,ODrive connection state, R,bool

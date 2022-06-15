@@ -12,14 +12,14 @@ namespace OpenFFBoard
         protected Board()
         {
     <#
-	foreach (string classFile in Directory.GetFiles(this.Host.ResolvePath("BoardClasses/csvs")))
+	foreach (string classFile in Directory.GetFiles(this.Host.ResolvePath("csvs")))
 	{#>
 		<#=Path.GetFileNameWithoutExtension(classFile)#> = new Commands.<#=Path.GetFileNameWithoutExtension(classFile)#>(this);
 	<#}#>
     }
 
     <#
-	foreach (string classFile in Directory.GetFiles(this.Host.ResolvePath("BoardClasses/csvs")))
+	foreach (string classFile in Directory.GetFiles(this.Host.ResolvePath("csvs")))
 	{#>
     public Commands.<#=Path.GetFileNameWithoutExtension(classFile)#> <#=Path.GetFileNameWithoutExtension(classFile)#> { get; }
 	<#}#>
@@ -27,10 +27,7 @@ namespace OpenFFBoard
 
         public abstract void Connect();
         public abstract void Disconnect();
-        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd);
-        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte instance, BoardCommand cmd, ulong address);
-        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd);
-        public abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, BoardCommand cmd, ulong address);
-        public abstract Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong address = 0);
+        internal abstract Commands.BoardResponse GetBoardData(BoardClass boardClass, byte? instance, BoardCommand cmd, ulong? address, bool info = false);
+        internal abstract Commands.BoardResponse SetBoardData<T>(BoardClass boardClass, byte instance, BoardCommand<T> cmd, T value, ulong? address);
     }
 }
