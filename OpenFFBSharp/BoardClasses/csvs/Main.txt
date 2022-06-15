@@ -11,5 +11,5 @@ lsbtn,0x3,Get available button sources, R (STR),string
 aintypes,0x5,Enabled analog sources, R W,byte
 lsain,0x6,Get available analog sources, R (STR),string
 addain,0x7,Enable analog source, W,byte
-hidrate,0x8,Get estimated effect update speed, R,uint
-hidsendspd,0x9,Change HID gamepad update rate, R W I,uint
+hidrate,0x8,Get estimated effect update speed, R,ushort
+hidsendspd,0x9,Change HID gamepad update rate, R W I,ushort

@@ -605,13 +605,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region power
-			private readonly BoardCommand<uint> _power = new BoardCommand<uint>("power", 0x0, "Overall force strength", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<ushort> _power = new BoardCommand<ushort>("power", 0x0, "Overall force strength", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Overall force strength
 			/// </summary>
 			/// <returns></returns>
-			public uint GetPower()
+			public ushort GetPower()
 			{
 				return _power.GetValue(_board, this);
 			}
@@ -620,7 +620,7 @@ namespace OpenFFBoard
 			/// Overall force strength
 			/// </summary>
 			/// <returns></returns>
-			public bool SetPower(uint newPower)
+			public bool SetPower(ushort newPower)
 			{
 				var query = _power.SetValue(_board, this, newPower);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _power;
@@ -629,13 +629,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region degrees
-			private readonly BoardCommand<uint> _degrees = new BoardCommand<uint>("degrees", 0x1, "Rotation range in deg", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<ushort> _degrees = new BoardCommand<ushort>("degrees", 0x1, "Rotation range in deg", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Rotation range in deg
 			/// </summary>
 			/// <returns></returns>
-			public uint GetDegrees()
+			public ushort GetDegrees()
 			{
 				return _degrees.GetValue(_board, this);
 			}
@@ -644,7 +644,7 @@ namespace OpenFFBoard
 			/// Rotation range in deg
 			/// </summary>
 			/// <returns></returns>
-			public bool SetDegrees(uint newDegrees)
+			public bool SetDegrees(ushort newDegrees)
 			{
 				var query = _degrees.SetValue(_board, this, newDegrees);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _degrees;
@@ -841,13 +841,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region maxspeed
-			private readonly BoardCommand<byte> _maxspeed = new BoardCommand<byte>("maxspeed", 0xA, "Speed limit in deg/s", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<long> _maxspeed = new BoardCommand<long>("maxspeed", 0xA, "Speed limit in deg/s", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Speed limit in deg/s
 			/// </summary>
 			/// <returns></returns>
-			public byte GetMaxspeed()
+			public long GetMaxspeed()
 			{
 				return _maxspeed.GetValue(_board, this);
 			}
@@ -856,7 +856,7 @@ namespace OpenFFBoard
 			/// Speed limit in deg/s
 			/// </summary>
 			/// <returns></returns>
-			public bool SetMaxspeed(byte newMaxspeed)
+			public bool SetMaxspeed(long newMaxspeed)
 			{
 				var query = _maxspeed.SetValue(_board, this, newMaxspeed);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _maxspeed;
@@ -865,13 +865,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region maxtorquerate
-			private readonly BoardCommand<byte> _maxtorquerate = new BoardCommand<byte>("maxtorquerate", 0xB, "Torque rate limit in counts/ms", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<long> _maxtorquerate = new BoardCommand<long>("maxtorquerate", 0xB, "Torque rate limit in counts/ms", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Torque rate limit in counts/ms
 			/// </summary>
 			/// <returns></returns>
-			public byte GetMaxtorquerate()
+			public long GetMaxtorquerate()
 			{
 				return _maxtorquerate.GetValue(_board, this);
 			}
@@ -880,7 +880,7 @@ namespace OpenFFBoard
 			/// Torque rate limit in counts/ms
 			/// </summary>
 			/// <returns></returns>
-			public bool SetMaxtorquerate(byte newMaxtorquerate)
+			public bool SetMaxtorquerate(long newMaxtorquerate)
 			{
 				var query = _maxtorquerate.SetValue(_board, this, newMaxtorquerate);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _maxtorquerate;
@@ -1663,13 +1663,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region filterCfFreq
-			private readonly BoardCommand<uint> _filterCfFreq = new BoardCommand<uint>("filterCfFreq", 0x0, "Constant force filter frequency", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<ushort> _filterCfFreq = new BoardCommand<ushort>("filterCfFreq", 0x0, "Constant force filter frequency", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Constant force filter frequency
 			/// </summary>
 			/// <returns></returns>
-			public uint GetFiltercffreq()
+			public ushort GetFiltercffreq()
 			{
 				return _filterCfFreq.GetValue(_board, this);
 			}
@@ -1678,7 +1678,7 @@ namespace OpenFFBoard
 			/// Constant force filter frequency
 			/// </summary>
 			/// <returns></returns>
-			public bool SetFiltercffreq(uint newFiltercffreq)
+			public bool SetFiltercffreq(ushort newFiltercffreq)
 			{
 				var query = _filterCfFreq.SetValue(_board, this, newFiltercffreq);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _filterCfFreq;
@@ -2191,26 +2191,26 @@ namespace OpenFFBoard
 			#endregion
 
 			#region hidrate
-			private readonly BoardCommand<uint> _hidrate = new BoardCommand<uint>("hidrate", 0x8, "Get estimated effect update speed", CmdTypes.Get);
+			private readonly BoardCommand<ushort> _hidrate = new BoardCommand<ushort>("hidrate", 0x8, "Get estimated effect update speed", CmdTypes.Get);
 
 			/// <summary>
 			/// Get estimated effect update speed
 			/// </summary>
 			/// <returns></returns>
-			public uint GetHidrate()
+			public ushort GetHidrate()
 			{
 				return _hidrate.GetValue(_board, this);
 			}
 			#endregion
 
 			#region hidsendspd
-			private readonly BoardCommand<uint> _hidsendspd = new BoardCommand<uint>("hidsendspd", 0x9, "Change HID gamepad update rate", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
+			private readonly BoardCommand<ushort> _hidsendspd = new BoardCommand<ushort>("hidsendspd", 0x9, "Change HID gamepad update rate", CmdTypes.Get | CmdTypes.Set | CmdTypes.Info);
 
 			/// <summary>
 			/// Change HID gamepad update rate
 			/// </summary>
 			/// <returns></returns>
-			public uint GetHidsendspd()
+			public ushort GetHidsendspd()
 			{
 				return _hidsendspd.GetValue(_board, this);
 			}
@@ -2219,7 +2219,7 @@ namespace OpenFFBoard
 			/// Change HID gamepad update rate
 			/// </summary>
 			/// <returns></returns>
-			public bool SetHidsendspd(uint newHidsendspd)
+			public bool SetHidsendspd(ushort newHidsendspd)
 			{
 				var query = _hidsendspd.SetValue(_board, this, newHidsendspd);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _hidsendspd;
@@ -3297,13 +3297,13 @@ namespace OpenFFBoard
 			#endregion
 
 			#region flashraw
-			private readonly BoardCommand<string> _flashraw = new BoardCommand<string>("flashraw", 0xD, "Write value to flash address", CmdTypes.SetAddress);
+			private readonly BoardCommand<ulong> _flashraw = new BoardCommand<ulong>("flashraw", 0xD, "Write value to flash address", CmdTypes.SetAddress);
 
 			/// <summary>
 			/// Write value to flash address
 			/// </summary>
 			/// <returns></returns>
-			public bool SetFlashraw(string newFlashraw, ulong address)
+			public bool SetFlashraw(ulong newFlashraw, ulong address)
 			{
 				var query = _flashraw.SetValue(_board, this, newFlashraw, address);
 				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _flashraw;

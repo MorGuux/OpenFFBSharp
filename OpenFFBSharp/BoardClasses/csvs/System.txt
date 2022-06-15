@@ -10,7 +10,7 @@ vext,0xF,External voltage(mV), R,uint
 main,0x7,Query or change mainclass, R W,byte
 swver,0x4,Firmware version, R,string
 hwtype,0x5,Hardware type, R,string
-flashraw,0xD,Write value to flash address, WA,string
+flashraw,0xD,Write value to flash address, WA,ulong
 flashdump,0xC,Read all flash variables (val:adr), R,string
 errors,0xA,Read error states, R,string
 errorsclr,0xB,Reset errors, R,bool

@@ -4,7 +4,7 @@ name,0x80000002,name of class, R (STR),string
 help,0x80000003,Prints help for commands, R I (STR),string
 cmduid,0x80000005,Command handler index, R,long
 instance,0x80000004,Command handler instance number, R,long
-filterCfFreq,0x0,Constant force filter frequency, R W,uint
+filterCfFreq,0x0,Constant force filter frequency, R W,ushort
 filterCfQ,0x1,Constant force filter Q-factor, R W,byte
 spring,0x3,Spring gain, R W I,byte
 friction,0x4,Friction gain, R W I,byte
