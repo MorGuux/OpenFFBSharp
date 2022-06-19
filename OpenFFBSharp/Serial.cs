@@ -319,6 +319,8 @@ namespace OpenFFBoard
                     break;
                 case CmdType.WriteAddress:
                     cmdBuffer += '=';
+                    cmdBuffer += data;
+                    cmdBuffer += '?';
                     cmdBuffer += address;
                     break;
                 case CmdType.Info:
