@@ -1369,37 +1369,50 @@ namespace OpenFFBoard
 			private readonly BoardCommand<string> _send = new BoardCommand<string>("send", 0x1, "Send CAN frame. Adr&Value required", CmdTypes.SetAddress);
 
 			/// <summary>
-			/// Send CAN frame. Adr&Value required
+			/// Send CAN frame. Useful for static length CAN protocols where the message length does not need to be changed per new frame.
 			/// </summary>
 			/// <returns></returns>
-			public bool SetSend(string newSend, ulong address)
+			public bool SendFrame(ulong address, string data)
 			{
-				var query = _send.SetValue(_board, this, newSend, address);
-				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _send;
+				var query = _send.SetValue(_board, this, data, address);
+				return query.Type == CmdType.Acknowledgment || query.Type == CmdType.Request && query.ClassId == ClassId && query.Cmd == _send;
 			}
 			#endregion
 
 			#region len
-			private readonly BoardCommand<byte> _len = new BoardCommand<byte>("len", 0x2, "Set length of next frames", CmdTypes.Get | CmdTypes.Set);
+			private readonly BoardCommand<byte> _length = new BoardCommand<byte>("len", 0x2, "Set length of next frames", CmdTypes.Get | CmdTypes.Set);
 
 			/// <summary>
 			/// Set length of next frames
 			/// </summary>
 			/// <returns></returns>
-			public byte GetLen()
+			public byte GetLength()
 			{
-				return _len.GetValue(_board, this);
+				return _length.GetValue(_board, this);
 			}
 
 			/// <summary>
 			/// Set length of next frames
 			/// </summary>
 			/// <returns></returns>
-			public bool SetLen(byte newLen)
+			public bool SetLength(byte newLength)
 			{
-				var query = _len.SetValue(_board, this, newLen);
-				return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _len;
+				var query = _length.SetValue(_board, this, newLength);
+				return query.Type == CmdType.Acknowledgment || query.Type == CmdType.Info && query.ClassId == ClassId && query.Cmd == _length;
 			}
+
+			/// <summary>
+			/// Send a CAN frame with a given address and data. Sets frame length to data length.
+			/// </summary>
+			/// <param name="address"></param>
+			/// <param name="data"></param>
+			/// <returns></returns>
+			public bool SendFrame(uint address, byte[] data)
+            {
+				if (this.SetLength((byte)data.Length))
+					return this.SendFrame(address, BitConverter.ToString(data));
+				return false;
+            }
 
 			#endregion
 		}
