@@ -4633,11 +4633,11 @@ namespace OpenFFBoard
 				Commands.BoardResponse response = board.GetBoardData(boardClass, null, this, null);
 				if (response.Type == Commands.CmdType.Error || response.Type == Commands.CmdType.NotFound)
 					return default;
-				if ((string)response.Data == "OK")
+				if (Convert.ToString(response.Data) == "OK")
 					return (T)Convert.ChangeType(true, typeof(T));
 
 				if (typeof(T) == typeof(bool))
-					return (T)Convert.ChangeType((string)response.Data == "1", typeof(T));
+					return (T)Convert.ChangeType(Convert.ToString(response.Data) == "1", typeof(T));
 
 				return (T)Convert.ChangeType(response.Data, typeof(T));
 			}
