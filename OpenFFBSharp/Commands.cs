@@ -4668,7 +4668,7 @@ namespace OpenFFBoard
 
 		public Commands.BoardResponse SetValue(Board board, BoardClass boardClass, T value, ulong address)
 		{
-			if (Types.HasFlag(BoardClass.CmdTypes.Set))
+			if (Types.HasFlag(BoardClass.CmdTypes.Set) || Types.HasFlag(BoardClass.CmdTypes.SetAddress))
 			{
 				return board.SetBoardData(boardClass, 0, this, value, address);
 			}
