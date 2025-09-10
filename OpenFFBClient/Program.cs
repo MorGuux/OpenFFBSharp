@@ -35,6 +35,8 @@ namespace OpenFFBClient
             Console.WriteLine("Inverted: {0}", openFFBoard.Axis.GetInvert());
             Console.WriteLine("Idle spring: {0}", openFFBoard.Axis.GetIdlespring());
             Console.WriteLine("Damper: {0}", openFFBoard.Axis.GetAxisdamper());
+            Console.WriteLine("Friction: {0}", openFFBoard.Axis.GetAxisfriction());
+            Console.WriteLine("Inertia: {0}", openFFBoard.Axis.GetAxisinertia());
             Console.WriteLine("Encoder type: {0}", openFFBoard.Axis.GetEnctype());
             Console.WriteLine("Driver type: {0}", openFFBoard.Axis.GetDrvtype());
             Console.WriteLine("Encoder position: {0}", openFFBoard.Axis.GetPos());

@@ -936,9 +936,56 @@ namespace OpenFFBoard
 			{
 				return _curpos.GetValue(_board, this);
 			}
-			#endregion
-		}
-		public class CANAnalogAxes : BoardClass
+            #endregion
+
+            #region axisfriction
+            private readonly BoardCommand<long> _axisfriction = new BoardCommand<long>("axisfriction", 0x16, "Axis Friction. Independent friction effect. 255=100%", CmdTypes.Get | CmdTypes.Set);
+
+            /// <summary>
+            /// Axis Friction configured position
+            /// </summary>
+            /// <returns></returns>
+            public long GetAxisfriction()
+            {
+                return _axisfriction.GetValue(_board, this);
+            }
+
+            /// <summary>
+            /// Axios Friction. Independent friction effect. 255=100%
+            /// </summary>
+            /// <returns></returns>
+            public bool SetAxisfriction(byte newAxisfriction)
+            {
+                var query = _axisfriction.SetValue(_board, this, newAxisfriction);
+                return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _axisfriction;
+            }
+            #endregion
+
+            #region axisinertia
+            private readonly BoardCommand<long> _axisinertia = new BoardCommand<long>("axisinertia", 0xF, "Axis Inertia. Independent inertia effect. 255=100%", CmdTypes.Get | CmdTypes.Set);
+
+            /// <summary>
+            /// Axis Inertia configured position
+            /// </summary>
+            /// <returns></returns>
+            public long GetAxisinertia()
+            {
+                return _axisinertia.GetValue(_board, this);
+            }
+
+            /// <summary>
+            /// Axis Inertia. Independent inertia effect. 255=100%
+            /// </summary>
+            /// <returns></returns>
+            public bool SetAxisinertia(byte newAxisinertia)
+            {
+                var query = _axisinertia.SetValue(_board, this, newAxisinertia);
+                return query.Type == CmdType.Acknowledgment && query.ClassId == ClassId && query.Cmd == _axisinertia;
+            }
+            #endregion
+        }
+
+        public class CANAnalogAxes : BoardClass
 		{
 
 			private readonly Board _board;
