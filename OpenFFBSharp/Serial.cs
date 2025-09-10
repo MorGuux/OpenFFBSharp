@@ -63,6 +63,7 @@ namespace OpenFFBoard
         public override void Disconnect()
         {
             _serialPort.Close();
+            IsConnected = _serialPort.IsOpen;
         }
 
         public static string[] GetBoards()
