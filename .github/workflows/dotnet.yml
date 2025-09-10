@@ -30,7 +30,7 @@ jobs:
       run: msbuild OpenFFBSharp.sln /p:Configuration=Release
       
     - name: Upload DLL
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: openffbsharp-dll
         path: OpenFFBClient/bin/Release/OpenFFBSharp.dll
