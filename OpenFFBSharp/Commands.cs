@@ -962,7 +962,7 @@ namespace OpenFFBoard
             #endregion
 
             #region axisinertia
-            private readonly BoardCommand<long> _axisinertia = new BoardCommand<long>("axisinertia", 0xF, "Axis Inertia. Independent inertia effect. 255=100%", CmdTypes.Get | CmdTypes.Set);
+            private readonly BoardCommand<long> _axisinertia = new BoardCommand<long>("axisinertia", 0x17, "Axis Inertia. Independent inertia effect. 255=100%", CmdTypes.Get | CmdTypes.Set);
 
             /// <summary>
             /// Axis Inertia configured position
